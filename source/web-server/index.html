@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Time Made Visible</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark text-light">
+    <h3>Time Made Visible</h3>
+    See 'em go!
+</nav>
+<div class="container-fluid h-100">
+    <div class="row">
+        <div class="col-sm-3" id="browser">
+            <h4 class="pt-1">Camera</h4>
+            <form class="needs-validation">
+                <div class="form-group row">
+                    <div class="col-md-8">
+                        <label class="sr-only" for="camera-selector">Camera</label>
+                        <input type="text" class="form-control" id="camera-selector" placeholder="Camera not selected"
+                               required>
+                        <div id="camera-invalid" class="invalid-feedback">
+                            Could not find that camera.
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <button type="submit" id="camera-select" class="btn btn-primary">Select</button>
+                    </div>
+
+                </div>
+            </form>
+            <h4 class="pt-1">Quick Photos</h4>
+            <div class="list-group "> <!-- list-group-flush -->
+
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/latest.jpg">Latest</a>
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/latest-01h.jpg">1h Ago</a>
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/latest-03h.jpg">3h Ago</a>
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/latest-06h.jpg">6h Ago</a>
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/latest-12h.jpg">12h
+                    Ago</a>
+                <a class="list-group-item list-group-item-action rel-link" title="latest-24h.jpg">24h Ago</a>
+            </div>
+
+            <h4 class="pt-1"> Quick Videos </h4>
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/latest-video/">Today</a>
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/yesterday-video/">Yesterday </a>
+                <a class="list-group-item list-group-item-action rel-link" title="quick-links/weekly-video/">Weekly</a>
+                <a class="list-group-item list-group-item-action rel-link"
+                   title="quick-links/monthly-video/">Monthly</a>
+                <a class="list-group-item list-group-item-action rel-link"
+                   title="quick-links/complete-video/">Complete</a>
+            </div>
+            <h4 class="pt-1"> File Browser </h4>
+            <div class="current-dir m-2"></div>
+            <div class="browser-view list-group"> No files to show. :(</div>
+            <button type="button" class="btn my-3 btn-outline-primary" id="refresh">Refresh</button>
+        </div>
+        <div class="col-sm" id="preview">
+            <div class="pt-1 sticky-top">
+                <div id="image-shower"></div>
+                <div id="video-player"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="app.js" type="module"></script>
+</body>
+</html>

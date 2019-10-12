@@ -1,0 +1,10 @@
+@media (min-width: 768px) {
+    .fixed-posi {
+        position:fixed;
+    }
+}
+
+.current-dir a:hover {
+        text-decoration: underline !important;
+
+}
