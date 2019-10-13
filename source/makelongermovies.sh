@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#!/bin/bash 
 #
 # Take the daily videos and combine them in to last week, last month and last year videos
 #
@@ -71,9 +71,17 @@ fi
 # The directory's date changes *not* on files' dates changes,
 # but if the fat changes (i.e. new file, etc.). This captures newly added files - good!
 # The meaning of "today" changes, but we don't want to follow along "today" unless new videos are coming in.
-if [ ! "$daily_videos_dir" -nt "$longer_videos_dir" ]; then
-	echo Nothing to do. "$daily_videos_dir" is older than "$longer_videos_dir".
-	exit 0
+# BUT: in S3, directories don't really exist!
+# So use the oldest file in each directory instead
+oldest_daily_video=$(ls -tr  "$daily_videos_dir" | tail -1)
+oldest_longer_video=$(ls -tr  "$longer_videos_dir" | tail -1)
+# There are some longer-videos already
+if [ ! -z "$oldest_longer_video" ]; then
+	# And they are newer than the daily videos  	
+	if [ ! "$oldest_daily_videos" -nt "$oldest_longer_videos" ]; then
+		echo Nothing to do. "$daily_videos_dir" is older than "$longer_videos_dir".
+		exit 0
+	fi
 fi
 
 # tlconcat writes to cwd.
