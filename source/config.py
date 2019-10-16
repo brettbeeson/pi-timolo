@@ -14,29 +14,36 @@ configName  = "config.py"
 # --------------------------
 # Note - Set verbose to False if script is run in background or from /etc/rc.local
 
-pluginEnable = False       # default= False True reads customized settings from a custom.py file
-pluginName = "shopcam"     # Specify filename in plugins subfolder without .py extension per below
+pluginEnable = True       # default= False True reads customized settings from a custom.py file
+pluginName = "TLbattery"     # Specify filename in plugins subfolder without .py extension per below
                            # TLlong, TLshort, secfast, secstill, strmvid, secvid, secQTL, shopcam, dashcam, slowmo
+dayFixedISO = 0         # default=0 0 for auto
+requireCV2 = False          # Default = True Must be in config.py, not plugin
 
-verbose = True             # default= True Sends logging Info to Console. False if running script as daeman
-logDataToFile = False      # default= False True logs diagnostic data to a disk file for review
-debug = False              # default= False True = debug mode returns pixel average data for tuning
+verbose = True         # default= True Sends logging Info to Console. False if running script as daeman
+logDataToFile = True # default= False True logs diagnostic data to a disk file for review
+debug = True              # default= False True = debug mode returns pixel average data for tuning
+drawSpinnyOverlay = True
+drawSpinnyGlyphDiameter = 50
+showTextLeft = True
 
 # Image Settings
 # --------------
-imageNamePrefix = 'cam1-'  # default= 'cam1-' for all image file names. Eg garage-
+awbMode = 'auto'
+imageNamePrefix = 'pi-'  # default= 'cam1-' for all image file names. Eg garage-
 imageWidth = 1280          # default= 1024 Full Size Image Width in px
 imageHeight = 720          # default= 768  Full Size Image Height in px
 imageFormat = ".jpg"       # default= ".jpg"  image Formats .jpeg .png .gif .bmp
 imageJpegQuality = 95      # default= 95 jpg Encoder Quality Values 1(low)-100(high min compression) 0=85
-imageRotation = 0          # Default= 0  Rotate image. Valid values: 0, 90, 180, 270
-imageVFlip = True          # default= False True Flips image Vertically
-imageHFlip = True          # default= False True Flips image Horizontally
+imageRotation = 0         # Default= 0  Rotate image. Valid values: 0, 90, 180, 270
+imageVFlip = False  # default= False True Flips image Vertically
+imageHFlip = False  # default= False True Flips image Horizontally
 imageGrayscale = False     # default= False True=Save image as grayscale False=Color
 imagePreview = False       # default= False True=Preview image on connected RPI Monitor or Display
 noNightShots = False       # default= False True=No Night Images (Motion or Timelapse)
 noDayShots = False         # default= False True=No Day Images (Motion or Timelapse)
 useVideoPort = False       # default= False True=Use the video port to capture motion images (faster than the image port).
+useStream = True           # default = True False = To minimise spinning, don't use the stream (only valid for timelapse with specific start/stop time)
 imageShowStream = False    # default= False True=Show video stream motion tracking area on full size image.
                            # Use to Align Camera for motion tracking.  Set to False when Alignment complete.
 streamWidth = 320          # default= 320  Width of motion tracking stream detection area
@@ -46,7 +53,7 @@ streamHeight = 240         # default= 240  Height of motion tracking stream dete
 # Date/Time Settings for Displaying info Directly on Images
 # ---------------------------------------------------------
 showDateOnImage = True     # default= True False=Do Not display date/time text on images
-showTextFontSize = 18      # default= 18 Size of image Font in pixel height
+showTextFontSize = 20      # default= 18 Size of image Font in pixel height
 showTextBottom = True      # default= True Bottom Location of image Text False= Top
 showTextWhite = True       # default= True White Colour of image Text False= Black
 showTextWhiteNight = True  # default= True Changes night text to white.  Useful if night needs white text instead of black
@@ -63,13 +70,13 @@ nightDarkAdjust = 4.7       # default= 4.7 Factor to fine tune nightDarkThreshol
 
 # Motion Track Settings
 # ---------------------
-motionTrackOn = True        # default= True True=Turns Motion Detect On, False=Off
+motionTrackOn = False       # default= True True=Turns Motion Detect On, False=Off
 motionTrackQuickPic = False # default= False True= save a frame image instead of switching out of opencv
-motionTrackInfo = True      # default= False Hide detailed track progress logging messages
+motionTrackInfo = False     # default= False Hide detailed track progress logging messages
 motionTrackTimeOut = 0.3    # default= 0.3 seconds Resets Track if no movement tracked
 motionTrackTrigLen = 75     # default= 75 px Length of motion track to Trigger motionFound
 motionTrackMinArea = 100    # default= 100 sq px  Minimum Area required to start tracking
-motionTrackFrameRate = 20   # default= 20 fps  PiVideoStream setting.  Single core RPI suggest 15 fps
+motionTrackFrameRate = 10   # default= 20 fps  PiVideoStream setting.  Single core RPI suggest 15 fps
 motionTrackQPBigger = 3.0   # default= 3.0 multiply size of QuickPic saved image from default 640x480
 
 # Motion Settings
@@ -105,12 +112,15 @@ timelapseOn = True          # default= False True=Turn timelapse On, False=Off
 timelapseDir = "media/timelapse" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
 timelapsePrefix = "tl-"     # default= "tl-" Prefix for All timelapse images with this prefix
 timelapseStartAt = ""       # default= "" Off or Specify date/time to Start Sequence Eg "01-dec-2019 08:00:00" or "20:00:00"
-timelapseTimer = 300        # default= 300 (5 min) Seconds between timelapse images
+timelapseEndAt = ""       # default= "" Off or Specify time to stop eg "08:00:00" or "20:00:00"
+exposureMax = 0             # default = 0
+exposureSmoothed = False    # default = False
+timelapseTimer = 30         # default= 300 (5 min) Seconds between timelapse images
 timelapseCamSleep = 4.0     # default= 4.0 seconds day sleep so camera can measure AWB before taking photo
-timelapseNumOn = True       # default= True filenames Sequenced by Number False=filenames by date/time
+timelapseNumOn = False      # default= True filenames Sequenced by Number False=filenames by date/time
 timelapseNumRecycle = True  # default= True Restart Numbering at NumStart  False= Surpress Timelapse at NumMax
 timelapseNumStart = 1000    # default= 1000 Start of timelapse number sequence
-timelapseNumMax = 2000      # default= 2000 Max number of timelapse images desired. 0=Continuous
+timelapseNumMax = 0         # default= 2000 Max number of timelapse images desired. 0=Continuous
 timelapseExitSec = 0        # default= 0 seconds Surpress Timelapse after specified Seconds  0=Continuous
 timelapseMaxFiles = 0       # default= 0 off or specify MaxFiles to maintain then oldest are deleted  default=0 (off)
 timelapseSubDirMaxFiles = 0 # default= 0 off or specify MaxFiles - Creates New dated sub-folder if MaxFiles exceeded

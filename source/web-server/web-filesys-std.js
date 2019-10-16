@@ -97,6 +97,22 @@ export class WebFileSysStd {
     }
 
     /**
+     * A Dash Dir contains ONE .mpd file and ZERO folders
+     * @returns string fileame of file matching *.mpd
+     */
+    dashFile(path) {
+        let dirfiles = fs.ls(path);
+        let mpd_entries = dirfiles.filter(function (d) {
+            return /.*.mpd$/.test(d);
+        });
+        if (mpd_entries.length > 0) {
+            return path.slashEnd(true) + mpd_entries[0];
+        } else {
+            return "";
+        }
+    }
+
+    /**
      * Adds the webroot (whatever is required at the start) to a resource location
      * eg urlTo('foo/bar.txt') => http://server.com/moose/foo/bar.txt
      * @param resource file or directory relative to webroot

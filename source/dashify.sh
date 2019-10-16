@@ -11,9 +11,9 @@ n_encodings=1
 scales=("640x360")
 crf=(28)
 
-n_encodings=3
-scales=("640x360" "1280x720" "1920x1080")
-crf=(28 24 23)
+#n_encodings=3
+#scales=("640x360" "1280x720" "1920x1080")
+#crf=(28 24 23)
 
 function basestname() {
     base=$(basename "$1")
@@ -67,6 +67,8 @@ if [ -f "$video" ]; then
     dash_dir=$output_dir/$(basestname "$video")
     dash_file=$output_dir/$(basestname "$video")/$(basestname "$video").mpd
     all_encoded=
+    echo "  dash_dir:$dash_dir" >&2
+    echo "  dash_file:$dash_file" >&2
     if [ ! -f "$dash_file" ] || [ "$video" -nt "$dash_file" ]; then
         for ((i = 0; i < $n_encodings; i++)); do
             encoded=$(encode "$video" "${scales[i]}" "${crf[i]}")
@@ -78,7 +80,7 @@ if [ -f "$video" ]; then
         if [ ! -d "$dash_dir" ]; then
             mkdir "$dash_dir" || exit 1
         fi
-        # probably clean up on exit?
+        #                                                                                   no quotes - seperate files                                                                                        
         MP4Box -dash-strict 2000 -rap -frag-rap -bs-switching no -profile "dashavc264:live" $all_encoded -out "$dash_file" || {
             echo MP4Box failed on "$dash_file" 1>&2
             rmdir "$dash_dir"

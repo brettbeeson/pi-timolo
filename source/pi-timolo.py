@@ -7,12 +7,14 @@ This release uses OpenCV to do Motion Tracking.
 It requires updated config.py
 """
 from __future__ import print_function
-progVer = "ver 11.52"   # Requires Latest 11.2 release of config.py
-__version__ = progVer   # May test for version number at a future time
+
+progVer = "ver 11.52"  # Requires Latest 11.2 release of config.py
+__version__ = progVer  # May test for version number at a future time
 
 import os
-warn_on = False   # Add short delay to review warning messages
-mypath = os.path.abspath(__file__) # Find the full path of this python script
+import sys
+warn_on = False  # Add short delay to review warning messages
+mypath = os.path.abspath(__file__)  # Find the full path of this python script
 # get the path location only (excluding script name)
 baseDir = os.path.dirname(mypath)
 baseFileName = os.path.splitext(os.path.basename(mypath))[0]
@@ -21,6 +23,8 @@ logFilePath = os.path.join(baseDir, baseFileName + ".log")
 horz_line = '-------------------------------------------------------'
 print(horz_line)
 print('%s %s  written by Claude Pageau' % (progName, progVer))
+print('Modified by Brett Beeson')
+print("Python {}".format(sys.version))
 print(horz_line)
 print('Loading Wait ....')
 
@@ -40,13 +44,16 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
+print('Loading optionals..')
+
 # Attempt to import dateutil
 try:
     from dateutil.parser import parse
 except ImportError:
     print("WARN : Could Not Import dateutil.parser")
     print("       Disabling timelapseStartAt, motionStartAt and VideoStartAt")
-    print("       See https://github.com/pageauc/pi-timolo/wiki/Basic-Trouble-Shooting#problems-with-python-pip-install-on-wheezy")
+    print(
+        "       See https://github.com/pageauc/pi-timolo/wiki/Basic-Trouble-Shooting#problems-with-python-pip-install-on-wheezy")
     warn_on = True
     # Disable get_sched_start if import fails for Raspbian wheezy or Jessie
     timelapseStartAt = ""
@@ -82,117 +89,127 @@ Note: plugins can override default and config.py values if plugins are
       enabled.  This happens after config.py variables are initialized
 """
 default_settings = {
-    'configName':'default_settings',
-    'configTitle':'No config.py so using internal dictionary settings',
-    'pluginEnable':False,
-    'pluginName':"shopcam",
-    'verbose':True,
-    'logDataToFile':False,
-    'debug':False,
-    'imageNamePrefix':'cam1-',
-    'imageWidth':1920,
-    'imageHeight':1080,
-    'imageFormat':".jpg",
-    'imageJpegQuality':95,
-    'imageRotation':0,
-    'imageVFlip':True,
-    'imageHFlip':True,
-    'imageGrayscale':False,
-    'imagePreview':False,
-    'noNightShots':False,
-    'noDayShots':False,
-    'useVideoPort':False,
-    'imageShowStream':False,
-    'streamWidth':320,
-    'streamHeight':240,
-    'showDateOnImage':True,
-    'showTextFontSize':18,
-    'showTextBottom':True,
-    'showTextWhite':True,
-    'showTextWhiteNight':True,
-    'nightTwilightThreshold':90,
-    'nightDarkThreshold':50,
-    'nightBlackThreshold':4,
-    'nightSleepSec':30,
-    'nightMaxShutSec':5.9,
-    'nightMaxISO':800,
-    'nightDarkAdjust':4.7,
-    'motionTrackOn':True,
-    'motionTrackQuickPic':False,
-    'motionTrackInfo':True,
-    'motionTrackTimeOut':0.3,
-    'motionTrackTrigLen':75,
-    'motionTrackMinArea':100,
-    'motionTrackFrameRate':20,
-    'motionTrackQPBigger':3.0,
-    'motionDir':"media/motion",
-    'motionPrefix':"mo-",
-    'motionStartAt':"",
-    'motionVideoOn':False,
-    'motionVideoFPS':15,
-    'motionVideoTimer':10,
-    'motionQuickTLOn':False,
-    'motionQuickTLTimer':20,
-    'motionQuickTLInterval':4,
-    'motionForce':3600,
-    'motionNumOn':True,
-    'motionNumRecycle':True,
-    'motionNumStart':1000,
-    'motionNumMax':500,
-    'motionSubDirMaxFiles':0,
-    'motionSubDirMaxHours':0,
-    'motionRecentMax':40,
-    'motionRecentDir':"media/recent/motion",
-    'motionDotsOn':False,
-    'motionDotsMax':100,
-    'motionCamSleep':0.7,
-    'createLockFile':False,
-    'timelapseOn':True,
-    'timelapseDir':"media/timelapse",
-    'timelapsePrefix':"tl-",
-    'timelapseStartAt':"",
-    'timelapseTimer':300,
-    'timelapseCamSleep':4.0,
-    'timelapseNumOn':True,
-    'timelapseNumRecycle':True,
-    'timelapseNumStart':1000,
-    'timelapseNumMax':2000,
-    'timelapseExitSec':0,
-    'timelapseMaxFiles':0,
-    'timelapseSubDirMaxFiles':0,
-    'timelapseSubDirMaxHours':0,
-    'timelapseRecentMax':40,
-    'timelapseRecentDir':"media/recent/timelapse",
-    'videoRepeatOn':False,
-    'videoPath':"media/videos",
-    'videoPrefix':"vid-",
-    'videoStartAt':"",
-    'videoDuration':120,
-    'videoTimer':60,
-    'videoFPS':30,
-    'videoNumOn':False,
-    'videoNumRecycle':False,
-    'videoNumStart':100,
-    'videoNumMax':20,
-    'spaceTimerHrs':0,
-    'spaceFreeMB':500,
-    'spaceMediaDir':'/home/pi/pi-timolo/media',
-    'spaceFileExt':'jpg',
-    'web_server_port':8080,
-    'web_server_root':"media",
-    'web_page_title':"PI-TIMOLO Media",
-    'web_page_refresh_on':True,
-    'web_page_refresh_sec':"900",
-    'web_page_blank':False,
-    'web_image_height':"768",
-    'web_iframe_width_usage':"70%",
-    'web_iframe_width':"100%",
-    'web_iframe_height':"100%",
-    'web_max_list_entries':0,
-    'web_list_height':"768",
-    'web_list_by_datetime':True,
-    'web_list_sort_descending':True
-    }
+    'awbMode': 'auto',
+    'configName': 'default_settings',
+    'configTitle': 'No config.py so using internal dictionary settings',
+    'drawSpinnyOverlay' : False,
+    'drawSpinnyGlyphDiameter' : 50,
+    'fileByDay' : False,
+    'pluginEnable': False,
+    'pluginName': "shopcam",
+    'verbose': True,
+    'logDataToFile': False,
+    'dayFixedISO': 0,
+    'debug': False,
+    'exposureMax' : 0,
+    'exposureSmoothed' : False,
+    'imageNamePrefix': 'cam1-',
+    'imageWidth': 1920,
+    'imageHeight': 1080,
+    'imageFormat': ".jpg",
+    'imageJpegQuality': 95,
+    'imageRotation': 0,
+    'imageVFlip': True,
+    'imageHFlip': True,
+    'imageGrayscale': False,
+    'imagePreview': False,
+    'noNightShots': False,
+    'noDayShots': False,
+    'useVideoPort': False,
+    'imageShowStream': False,
+    'showTextLeft' : False,
+    'streamWidth': 320,
+    'streamHeight': 240,
+    'showDateOnImage': True,
+    'showTextFontSize': 18,
+    'showTextBottom': True,
+    'showTextWhite': True,
+    'showTextWhiteNight': True,
+    'nightTwilightThreshold': 90,
+    'nightDarkThreshold': 50,
+    'nightBlackThreshold': 4,
+    'nightSleepSec': 30,
+    'nightMaxShutSec': 5.9,
+    'nightMaxISO': 800,
+    'nightDarkAdjust': 4.7,
+    'motionTrackOn': True,
+    'motionTrackQuickPic': False,
+    'motionTrackInfo': True,
+    'motionTrackTimeOut': 0.3,
+    'motionTrackTrigLen': 75,
+    'motionTrackMinArea': 100,
+    'motionTrackFrameRate': 20,
+    'motionTrackQPBigger': 3.0,
+    'motionDir': "media/motion",
+    'motionPrefix': "mo-",
+    'motionStartAt': "",
+    'motionVideoOn': False,
+    'motionVideoFPS': 15,
+    'motionVideoTimer': 10,
+    'motionQuickTLOn': False,
+    'motionQuickTLTimer': 20,
+    'motionQuickTLInterval': 4,
+    'motionForce': 3600,
+    'motionNumOn': True,
+    'motionNumRecycle': True,
+    'motionNumStart': 1000,
+    'motionNumMax': 500,
+    'motionSubDirMaxFiles': 0,
+    'motionSubDirMaxHours': 0,
+    'motionRecentMax': 40,
+    'motionRecentDir': "media/recent/motion",
+    'motionDotsOn': False,
+    'motionDotsMax': 100,
+    'motionCamSleep': 0.7,
+    'createLockFile': False,
+    'timelapseOn': True,
+    'timelapseDir': "media/timelapse",
+    'timelapsePrefix': "tl-",
+    'timelapseStartAt': "",
+    'timelapseEndAt': "",
+    'timelapseTimer': 300,
+    'timelapseCamSleep': 4.0,
+    'timelapseNumOn': True,
+    'timelapseNumRecycle': True,
+    'timelapseNumStart': 1000,
+    'timelapseNumMax': 2000,
+    'timelapseExitSec': 0,
+    'timelapseMaxFiles': 0,
+    'timelapseSubDirMaxFiles': 0,
+    'timelapseSubDirMaxHours': 0,
+    'timelapseRecentMax': 40,
+    'timelapseRecentDir': "media/recent/timelapse",
+    'requireCV2': False,
+    'videoRepeatOn': False,
+    'videoPath': "media/videos",
+    'videoPrefix': "vid-",
+    'videoStartAt': "",
+    'videoDuration': 120,
+    'videoTimer': 60,
+    'videoFPS': 30,
+    'videoNumOn': False,
+    'videoNumRecycle': False,
+    'videoNumStart': 100,
+    'videoNumMax': 20,
+    'spaceTimerHrs': 0,
+    'spaceFreeMB': 500,
+    'spaceMediaDir': '/home/pi/pi-timolo/media',
+    'spaceFileExt': 'jpg',
+    'web_server_port': 8080,
+    'web_server_root': "media",
+    'web_page_title': "PI-TIMOLO Media",
+    'web_page_refresh_on': True,
+    'web_page_refresh_sec': "900",
+    'web_page_blank': False,
+    'web_image_height': "768",
+    'web_iframe_width_usage': "70%",
+    'web_iframe_width': "100%",
+    'web_iframe_height': "100%",
+    'web_max_list_entries': 0,
+    'web_list_height': "768",
+    'web_list_by_datetime': True,
+    'web_list_sort_descending': True
+}
 
 # Check for config.py variable file to import and error out if not found.
 configFilePath = os.path.join(baseDir, "config.py")
@@ -218,10 +235,10 @@ the values in the default_settings dictionary above.
 """
 for key, val in default_settings.items():
     try:
-        exec(key)
+        exec (key)
     except NameError:
         print('WARN  : config.py Variable Not Found. Setting ' + key + ' = ' + str(val))
-        exec(key + '=val')
+        exec (key + '=val')
         warn_on = True
 
 # Setup Logging now that variables are imported from config.py/plugin
@@ -240,11 +257,11 @@ else:
                         format='%(asctime)s %(levelname)-8s %(funcName)-10s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
 
- # Check for user_motion_code.py file to import and error out if not found.
+# Check for user_motion_code.py file to import and error out if not found.
 userMotionFilePath = os.path.join(baseDir, "user_motion_code.py")
 if not os.path.isfile(userMotionFilePath):
     print('WARN  : %s File Not Found. Cannot Import user_motion_code functions.'
-           % userMotionFilePath)
+          % userMotionFilePath)
     warn_on = True
 else:
     # Read Configuration variables from config.py file
@@ -259,12 +276,16 @@ else:
 # Give some time to read any warnings
 if warn_on and verbose:
     print('')
-    print('Please Review Warnings  Wait 10 sec ...')
-    time.sleep(10)
+    #print('Please Review Warnings  Wait 10 sec ...')
+    # time.sleep(10)
+
 
 try:
-    import cv2
+    if requireCV2:
+        logging.debug('Loading cv2...')
+        import cv2
 except ImportError:
+    print('Error loading cv2...')
     if sys.version_info > (2, 9):
         logging.error("Failed to import cv2 opencv for python3")
         logging.error("Try installing opencv for python3")
@@ -274,6 +295,7 @@ except ImportError:
         logging.error("Try reinstalling per command")
         logging.error("sudo apt-get install python-opencv")
     logging.error("Exiting %s Due to Error", progName)
+    print('Exiting...')
     sys.exit(1)
 
 try:
@@ -294,7 +316,7 @@ import picamera.array
 camResult = subprocess.check_output("vcgencmd get_camera", shell=True)
 camResult = camResult.decode("utf-8")
 camResult = camResult.replace("\n", "")
-if (camResult.find("0")) >= 0:   # Was a 0 found in vcgencmd output
+if (camResult.find("0")) >= 0:  # Was a 0 found in vcgencmd output
     logging.error("Pi Camera Module Not Found %s", camResult)
     logging.error("if supported=0 Enable Camera using command sudo raspi-config")
     logging.error("if detected=0 Check Pi Camera Module is Installed Correctly")
@@ -303,11 +325,11 @@ if (camResult.find("0")) >= 0:   # Was a 0 found in vcgencmd output
 else:
     logging.info("Pi Camera Module is Enabled and Connected %s", camResult)
 
-if pluginEnable:     # Check and verify plugin and load variable overlay
+if pluginEnable:  # Check and verify plugin and load variable overlay
     pluginDir = os.path.join(baseDir, "plugins")
     # Check if there is a .py at the end of pluginName variable
     if pluginName.endswith('.py'):
-        pluginName = pluginName[:-3]    # Remove .py extensiion
+        pluginName = pluginName[:-3]  # Remove .py extensiion
     pluginPath = os.path.join(pluginDir, pluginName + '.py')
     logging.info("pluginEnabled - loading pluginName %s", pluginPath)
     if not os.path.isdir(pluginDir):
@@ -338,7 +360,7 @@ if pluginEnable:     # Check and verify plugin and load variable overlay
         sys.exit(1)
     else:
         pluginCurrent = os.path.join(pluginDir, "current.py")
-        try:    # Copy image file to recent folder
+        try:  # Copy image file to recent folder
             logging.info("Copy %s to %s", pluginPath, pluginCurrent)
             shutil.copy(pluginPath, pluginCurrent)
         except OSError as err:
@@ -350,6 +372,7 @@ if pluginEnable:     # Check and verify plugin and load variable overlay
         logging.info("Import Plugin %s", pluginPath)
         sys.path.insert(0, pluginDir)  # add plugin directory to program PATH
         from plugins.current import *
+
         try:
             if os.path.isfile(pluginCurrent):
                 os.remove(pluginCurrent)
@@ -357,7 +380,7 @@ if pluginEnable:     # Check and verify plugin and load variable overlay
             if os.path.isfile(pluginCurrentpyc):
                 os.remove(pluginCurrentpyc)
         except OSError as err:
-            logging.warn("Failed Removal of %s - %s", pluginCurrentpyc, err)
+            logging.warning("Failed Removal of %s - %s", pluginCurrentpyc, err)
             time.sleep(5)
 else:
     logging.info("No Plugin Enabled per pluginEnable=%s", pluginEnable)
@@ -367,19 +390,19 @@ if debug:
     verbose = True
 
 # Make sure image format extention starts with a dot
-if not imageFormat.startswith('.',0,1):
+if not imageFormat.startswith('.', 0, 1):
     imageFormat = '.' + imageFormat
 
-#==================================
+# ==================================
 #      System Variables
 # Should Not need to be customized
-#==================================
-SECONDS2MICRO = 1000000    # Used to convert from seconds to microseconds
+# ==================================
+SECONDS2MICRO = 1000000  # Used to convert from seconds to microseconds
 nightMaxShut = int(nightMaxShutSec * SECONDS2MICRO)
 # default=5 seconds IMPORTANT- 6 seconds works sometimes
 # but occasionally locks RPI and HARD reboot required to clear
-darkAdjust = int((SECONDS2MICRO/5.0) * nightDarkAdjust)
-daymode = False            # default should always be False.
+darkAdjust = int((SECONDS2MICRO / 5.0) * nightDarkAdjust)
+daymode = False  # default should always be False.
 motionPath = os.path.join(baseDir, motionDir)  # Store Motion images
 # motion dat file to save currentCount
 motionNumPath = os.path.join(baseDir, motionPrefix + baseFileName + ".dat")
@@ -394,8 +417,8 @@ cvBlack = (0, 0, 0)
 cvBlue = (255, 0, 0)
 cvGreen = (0, 255, 0)
 cvRed = (0, 0, 255)
-LINE_THICKNESS = 1     # Thickness of opencv drawing lines
-LINE_COLOR = cvWhite   # color of lines to highlight motion stream area
+LINE_THICKNESS = 1  # Thickness of opencv drawing lines
+LINE_COLOR = cvWhite  # color of lines to highlight motion stream area
 
 CAMERA_WIDTH = streamWidth
 CAMERA_HEIGHT = streamHeight
@@ -422,12 +445,16 @@ if imageJpegQuality < 1:
 elif imageJpegQuality > 100:
     imageJpegQuality = 100
 
-#------------------------------------------------------------------------------
+# Remember last shutter speed to enable smoothing (TLbattery)
+lastShutterSpeed = 0
+
+# ------------------------------------------------------------------------------
 class PiVideoStream:
     """
     Create a picamera in memory video stream and
     return a frame when update called
     """
+
     def __init__(self, resolution=(CAMERA_WIDTH, CAMERA_HEIGHT),
                  framerate=CAMERA_FRAMERATE,
                  rotation=0,
@@ -450,7 +477,7 @@ class PiVideoStream:
                                                      use_video_port=True)
         # initialize the frame and the variable used to indicate
         # if the thread should be stopped
-        self.thread = None   # Initialize thread
+        self.thread = None  # Initialize thread
         self.frame = None
         self.stopped = False
 
@@ -486,14 +513,16 @@ class PiVideoStream:
         if self.thread is not None:
             self.thread.join()
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def shut2Sec(shutspeed):
     """ Convert camera shutter speed setting to string """
-    shutspeedSec = shutspeed/float(SECONDS2MICRO)
+    shutspeedSec = shutspeed / float(SECONDS2MICRO)
     shutstring = str("%.4f") % (shutspeedSec)
     return shutstring
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def showTime():
     """ Show current date time in text format """
     rightNow = datetime.datetime.now()
@@ -505,7 +534,8 @@ def showTime():
                                                       rightNow.second))
     return currentTime
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def showDots(dotcnt):
     """
     If motionShowDots=True then display a progress
@@ -529,7 +559,8 @@ def showDots(dotcnt):
                 sys.stdout.flush()
     return dotcnt
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def checkConfig():
     """
     Check if both motion track and
@@ -545,7 +576,8 @@ def checkConfig():
             sys.stdout.write(errorText)
         sys.exit(1)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def displayInfo(motioncount, timelapsecount):
     """ Display variable settings with plugin overlays if required """
     if verbose:
@@ -569,6 +601,8 @@ def displayInfo(motioncount, timelapsecount):
         if imageFormat == '.jpg' or imageFormat == '.jpeg':
             print("               JpegQuality=%i where 1=Low 100=High"
                   % (imageJpegQuality))
+        print("   White Balance.. awbMode=%s"
+              % (awbMode))
         print("   Low Light.. nightTwilightThreshold=%i"
               "  nightDarkThreshold=%i  nightBlackThreshold=%i"
               % (nightTwilightThreshold, nightDarkThreshold, nightBlackThreshold))
@@ -604,7 +638,7 @@ def displayInfo(motioncount, timelapsecount):
                   " Set Valid Date and/or Time to Start Sequence"
                   % motionStartAt)
             print("   Force ..... forceTimer=%i min (If No Motion)"
-                  % (motionForce/60))
+                  % (motionForce / 60))
             print("   Lockfile .. On=%s  Path=%s  NOTE: For Motion Images Only."
                   % (createLockFile, lockFilePath))
 
@@ -654,6 +688,11 @@ def displayInfo(motioncount, timelapsecount):
             print("   Sched ..... timelapseStartAt %s blank=Off or"
                   " Set Valid Date and/or Time to Start Sequence"
                   % timelapseStartAt)
+            print("   Sched ..... timelapseEndAt %s blank=Off or"
+                  " Set Valid Date and/or Time to Start Sequence"
+                  % timelapseEndAt)
+            print("  Filing ..... fileByDay {}".format(fileByDay))
+
             if timelapseNumOn:
                 print("   Num Seq ... On=%s  numRecycle=%s  numStart=%i   numMax=%i  current=%s"
                       % (timelapseNumOn, timelapseNumRecycle, timelapseNumStart,
@@ -671,7 +710,7 @@ def displayInfo(motioncount, timelapsecount):
             print("Time Lapse ... timelapseOn=%s  Timelapse is Disabled"
                   % timelapseOn)
         print("")
-        if spaceTimerHrs > 0:   # Check if disk mgmnt is enabled
+        if spaceTimerHrs > 0:  # Check if disk mgmnt is enabled
             print("Disk Space  .. Enabled - Manage Target Free Disk Space."
                   " Delete Oldest %s Files if Required"
                   % (spaceFileExt))
@@ -696,7 +735,8 @@ def displayInfo(motioncount, timelapsecount):
               "---------------------------------")
     checkConfig()
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def subDirLatest(directory):
     """ Scan for directories and return most recent """
     dirList = ([name for name in
@@ -709,7 +749,8 @@ def subDirLatest(directory):
         lastSubDir = directory
     return lastSubDir
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def subDirCreate(directory, prefix):
     """
     Create a subdirectory in directory with
@@ -734,7 +775,8 @@ def subDirCreate(directory, prefix):
         subDirPath = directory
     return subDirPath
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def subDirCheckMaxFiles(directory, filesMax):
     """ Count number of files in a folder path """
     fileList = glob.glob(directory + '/*jpg')
@@ -746,22 +788,23 @@ def subDirCheckMaxFiles(directory, filesMax):
         makeNewDir = False
     return makeNewDir
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def subDirCheckMaxHrs(directory, hrsMax, prefix):
     """
     Note to self need to add error checking
     extract the date-time from the directory name
     """
-    dirName = os.path.split(directory)[1] # split dir path and keep dirName
+    dirName = os.path.split(directory)[1]  # split dir path and keep dirName
     # remove prefix from dirName so just date-time left
     dirStr = dirName.replace(prefix, '')
     # convert string to datetime
     dirDate = datetime.datetime.strptime(dirStr, "%Y-%m-%d-%H:%M")
-    rightNow = datetime.datetime.now()   # get datetime now
+    rightNow = datetime.datetime.now()  # get datetime now
     diff = rightNow - dirDate  # get time difference between dates
     days, seconds = diff.days, diff.seconds
     dirAgeHours = days * 24 + seconds // 3600  # convert to hours
-    if dirAgeHours > hrsMax:   # See if hours are exceeded
+    if dirAgeHours > hrsMax:  # See if hours are exceeded
         makeNewDir = True
         logging.info('MaxHrs %i Exceeds %i for %s',
                      dirAgeHours, hrsMax, directory)
@@ -769,7 +812,8 @@ def subDirCheckMaxHrs(directory, hrsMax, prefix):
         makeNewDir = False
     return makeNewDir
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def subDirChecks(maxHours, maxFiles, directory, prefix):
     """ Check if motion SubDir needs to be created """
     if maxHours < 1 and maxFiles < 1:  # No Checks required
@@ -777,17 +821,17 @@ def subDirChecks(maxHours, maxFiles, directory, prefix):
         subDirPath = directory
     else:
         subDirPath = subDirLatest(directory)
-        if subDirPath == directory:   # No subDir Found
+        if subDirPath == directory:  # No subDir Found
             logging.info('No sub folders Found in %s', directory)
             subDirPath = subDirCreate(directory, prefix)
         # Check MaxHours Folder Age Only
         elif (maxHours > 0 and maxFiles < 1):
             if subDirCheckMaxHrs(subDirPath, maxHours, prefix):
                 subDirPath = subDirCreate(directory, prefix)
-        elif (maxHours < 1 and maxFiles > 0):   # Check Max Files Only
+        elif (maxHours < 1 and maxFiles > 0):  # Check Max Files Only
             if subDirCheckMaxFiles(subDirPath, maxFiles):
                 subDirPath = subDirCreate(directory, prefix)
-        elif maxHours > 0 and maxFiles > 0:   # Check both Max Files and Age
+        elif maxHours > 0 and maxFiles > 0:  # Check both Max Files and Age
             if subDirCheckMaxHrs(subDirPath, maxHours, prefix):
                 if subDirCheckMaxFiles(subDirPath, maxFiles):
                     subDirPath = subDirCreate(directory, prefix)
@@ -796,7 +840,8 @@ def subDirChecks(maxHours, maxFiles, directory, prefix):
     os.path.abspath(subDirPath)
     return subDirPath
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def checkMediaPaths():
     """
     Checks for image folders and
@@ -818,6 +863,8 @@ def checkMediaPaths():
             logging.info("Create TimeLapse Image Folder %s", timelapsePath)
             try:
                 os.makedirs(timelapsePath)
+                if fileByDay:
+                    os.makedirs(os.path.join(timelapsePath,"daily-photos"))
             except OSError as err:
                 logging.error("Could Not Create %s - %s", motionPath, err)
                 sys.exit(1)
@@ -844,27 +891,39 @@ def checkMediaPaths():
                               timelapseRecentDir, err)
                 sys.exit(1)
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
+def cleanStaleSymLinks(dirPath, prefix):
+    file_list = glob.glob(os.path.join(dirPath, prefix + '*'))
+    for filename in file_list:
+        if os.path.islink(filename) and not os.path.exists(filename):
+            os.unlink(filename)
+
+# ------------------------------------------------------------------------------
 def deleteOldFiles(maxFiles, dirPath, prefix):
     """
     Delete Oldest files gt or eq to maxfiles that match filename prefix
     """
     try:
+        # many operations will fail on stale symlinks, including the next glob. clean up first.
+        cleanStaleSymLinks(dirPath, prefix)
         fileList = sorted(glob.glob(os.path.join(dirPath, prefix + '*')), key=os.path.getmtime)
+
     except OSError as err:
         logging.error('Problem Reading Directory %s - %s', dirPath, err)
     else:
         while len(fileList) >= maxFiles:
             oldest = fileList[0]
             oldestFile = oldest
-            try:   # Remove oldest file in recent folder
+            try:  # Remove oldest file in recent folder
                 fileList.remove(oldest)
-                logging.info('%s', oldestFile)
+                logging.debug('%s', oldestFile)
                 os.remove(oldestFile)
             except OSError as err:
                 logging.error('Failed %s  err: %s', oldestFile, err)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def saveRecent(recentMax, recentDir, filename, prefix):
     """
     Create a symlink file in recent folder (timelapse or motion subfolder)
@@ -874,13 +933,14 @@ def saveRecent(recentMax, recentDir, filename, prefix):
     dest = os.path.abspath(os.path.join(recentDir,
                                         os.path.basename(filename)))
     deleteOldFiles(recentMax, os.path.abspath(recentDir), prefix)
-    try:    # Create symlink in recent folder
-        logging.info('symlink %s', dest)
+    try:  # Create symlink in recent folder
+        logging.debug('symlink %s', dest)
         os.symlink(src, dest)  # Create a symlink to actual file
     except OSError as err:
         logging.error('symlink %s to %s  err: %s', dest, src, err)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def filesToDelete(mediaDirPath, extension=imageFormat):
     """
     Deletes files of specified format extension
@@ -893,7 +953,8 @@ def filesToDelete(mediaDirPath, extension=imageFormat):
          if filename.endswith(extension)),
         key=lambda fn: os.stat(fn).st_mtime, reverse=True)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def freeSpaceUpTo(freeMB, mediaDir, extension=imageFormat):
     """
     Walks mediaDir and deletes oldest files until spaceFreeMB is achieved.
@@ -909,7 +970,7 @@ def freeSpaceUpTo(freeMB, mediaDir, extension=imageFormat):
         logging.info('Session Started')
         while fileList:
             statv = os.statvfs(mediaDirPath)
-            availFreeBytes = statv.f_bfree*statv.f_bsize
+            availFreeBytes = statv.f_bfree * statv.f_bsize
             if availFreeBytes >= targetFreeBytes:
                 break
             filePath = fileList.pop()
@@ -935,16 +996,17 @@ def freeSpaceUpTo(freeMB, mediaDir, extension=imageFormat):
     else:
         logging.error('Directory Not Found - %s', mediaDirPath)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def freeDiskSpaceCheck(lastSpaceCheck):
     """ Perform Disk space checking and Clean up
         if enabled and return datetime done
         to reset ready for next sched date/time"""
-    if spaceTimerHrs > 0:   # Check if disk free space timer hours is enabled
+    if spaceTimerHrs > 0:  # Check if disk free space timer hours is enabled
         # See if it is time to do disk clean-up check
         if (datetime.datetime.now() - lastSpaceCheck).total_seconds() > spaceTimerHrs * 3600:
             lastSpaceCheck = datetime.datetime.now()
-            if spaceFreeMB < 100:   # set freeSpaceMB to reasonable value if too low
+            if spaceFreeMB < 100:  # set freeSpaceMB to reasonable value if too low
                 diskFreeMB = 100
             else:
                 diskFreeMB = spaceFreeMB
@@ -953,7 +1015,8 @@ def freeDiskSpaceCheck(lastSpaceCheck):
             freeSpaceUpTo(diskFreeMB, spaceMediaDir, spaceFileExt)
     return lastSpaceCheck
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def getCurrentCount(numberpath, numberstart):
     """ Create a .dat file to store currentCount
         or read file if it already Exists"""
@@ -982,18 +1045,18 @@ def getCurrentCount(numberpath, numberstart):
                 fprefix = timelapsePath + timelapsePrefix + imageNamePrefix
 
             try:
-               # Scan image folder for most recent file
-               # and try to extract most recent number counter
+                # Scan image folder for most recent file
+                # and try to extract most recent number counter
                 newest = max(glob.iglob(filePath), key=os.path.getctime)
-                writeCount = newest[len(fprefix)+1:newest.find(imageFormat)]
+                writeCount = newest[len(fprefix) + 1:newest.find(imageFormat)]
             except:
                 writeCount = numberstart
 
             try:
-                numbercounter = int(writeCount)+1
+                numbercounter = int(writeCount) + 1
             except ValueError:
                 numbercounter = numberstart
-            logging.warn("Found Invalid Data in %s Resetting Counter to %s",
+            logging.warning("Found Invalid Data in %s Resetting Counter to %s",
                          numberpath, numbercounter)
         f = open(numberpath, 'w+')
         f.write(str(numbercounter))
@@ -1004,14 +1067,36 @@ def getCurrentCount(numberpath, numberstart):
         numbercounter = int(writeCount)
     return numbercounter
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+def drawSpinny(filename,dt):
+    """
+    Draw a small circle with a minute hand, for continuity checking. Plus it looks cool.
+    Requires a separate open (could refactor with "writeText")... but who cares?
+    """
+    img = Image.open(filename)
+    draw = ImageDraw.Draw(img)
+    # Bottom Left
+    w = drawSpinnyGlyphDiameter
+    # 1px off corner
+    bounding_box = [(1, img.height - w), (w, img.height - 1)]
+    # Angles are measured from 3 o’clock, increasing clockwise.
+    draw.pieslice(bounding_box, dt.minute * (360/60) - 90 ,  dt.minute * (360/60) - 90 , fill=None, outline=None)
+    #draw.pieslice(bounding_box, dt.hour * (360/12), dt.minute * (360/12), fill=None, outline=None)
+    draw.arc(bounding_box, 0, 360)
+    logging.debug("Stamping: {} at {}m {}deg".format(filename, dt.minute,dt.minute*(360/60) - 90))
+    img.save(filename)
+
+
+# ------------------------------------------------------------------------------
 def writeTextToImage(imagename, datetoprint, currentDayMode):
     """
     function to write date/time stamp
     directly on top or bottom of images.
     """
+    #logging.debug("imagename: {} datetoprint: {} showTextWhite: {} requireCV2: {} showTextFontSize:{}".format(imagename, datetoprint,showTextWhite,requireCV2,showTextFontSize))
+    TEXT = imageNamePrefix + datetoprint
     if showTextWhite:
-        FOREGROUND = (255, 255, 255) # rgb settings for white text foreground
+        FOREGROUND = (255, 255, 255)  # rgb settings for white text foreground
         textColour = "White"
     else:
         FOREGROUND = (0, 0, 0)  # rgb settings for black text foreground
@@ -1020,23 +1105,17 @@ def writeTextToImage(imagename, datetoprint, currentDayMode):
             # rgb settings for black text foreground
             FOREGROUND = (255, 255, 255)
             textColour = "White"
-    img = cv2.imread(imagename)
-    # This is grayscale image so channels is not avail or used
-    height, width, channels = img.shape
-    # centre text and compensate for graphics text being wider
-    x = int((width/2) - (len(imagename)*2))
-    if showTextBottom:
-        y = (height - 50)  # show text at bottom of image
-    else:
-        y = 10  # show text at top of image
-    TEXT = imageNamePrefix + datetoprint
+
     font_path = '/usr/share/fonts/truetype/freefont/FreeSansBold.ttf'
     font = ImageFont.truetype(font_path, showTextFontSize, encoding='unic')
     try:
-        text = TEXT.decode('utf-8')   # required for python2
+        text = TEXT.decode('utf-8')  # required for python2
     except:
-        text = TEXT   # Just set for python3
+        text = TEXT  # Just set for python3
+
     img = Image.open(imagename)
+    draw = ImageDraw.Draw(img)
+
     # For python3 install of pyexiv2 lib
     # See https://github.com/pageauc/pi-timolo/issues/79
 
@@ -1046,32 +1125,53 @@ def writeTextToImage(imagename, datetoprint, currentDayMode):
     except:
         pass
 
-    draw = ImageDraw.Draw(img)
-    # draw.text((x, y),"Sample Text",(r,g,b))
-    draw.text((x, y), text, FOREGROUND, font=font)
-    img.save(imagename)
-    logging.info("Added %s Text [ %s ]", textColour, datetoprint)
-    try:
-        metadata.write() # Write previously saved exif data to image file
-    except:
-        logging.warn("Image EXIF Data Not Transferred.")
-    logging.info("Saved %s", imagename)
+    # Get image dims with Pillow, in case we ain't got no CV. Careful: width, height order! Grrr.
+    width, height = img.size
+    # Get the size of the time to write, so we can correctly place it
+    text_box_size = draw.textsize(text=TEXT,font=font)
+    # Place text a ratio of the text height from edge
 
-#------------------------------------------------------------------------------
+    if showTextLeft:
+        # Make space for spinny
+        x = int(drawSpinnyGlyphDiameter * 1.1)
+    else:
+        # centre text and compensate for graphics text being wider
+        x = int((width / 2) - (text_box_size[0] * 2))
+
+    if showTextBottom:
+        # Place one line above bottom
+        y = (height - text_box_size[1] * 2)  # show text at bottom of image
+    else:
+        y = 10  # show text at top of image
+    #logging.debug("Image: {}x{} Text: +{}+{}".format(width,height,x,y))
+    draw.text(xy=(x, y), text=TEXT, fill=FOREGROUND, font=font)
+
+
+    try:
+        metadata.write()  # Write previously saved exif data to image file
+    except:
+        pass
+
+    img.save(imagename)
+
+# ------------------------------------------------------------------------------
 def postImageProcessing(numberon, counterstart, countermax, counter,
-                        recycle, counterpath, filename, currentDaymode):
+                        recycle, counterpath, filename, currentDaymode,dt=None):
     """ If required process text to display directly on image """
-    rightNow = datetime.datetime.now()
+    if (dt is None):
+        dt = datetime.datetime.now()
+    logging.debug("showDateOnImage: {} numberon: {}".format(showDateOnImage,numberon))
+
     if showDateOnImage:
-        dateTimeText = ("%04d%02d%02d_%02d:%02d:%02d"
-                        % (rightNow.year, rightNow.month, rightNow.day,
-                           rightNow.hour, rightNow.minute, rightNow.second))
+        dateTimeText = ("%04d-%02d-%02dT%02d:%02d:%02d"
+                        % (dt.year, dt.month, dt.day,
+                           dt.hour, dt.minute, dt.second))
         if numberon:
             if not recycle and countermax > 0:
                 counterStr = "%i/%i " % (counter, counterstart + countermax)
                 imageText = counterStr + dateTimeText
             else:
-                counterStr = "%i  "  % (counter)
+                counterStr = "%i  " % (counter)
                 imageText = counterStr + dateTimeText
         else:
             imageText = dateTimeText
@@ -1079,8 +1179,12 @@ def postImageProcessing(numberon, counterstart, countermax, counter,
         # Now put the imageText on the current image
         try:  # This will fail for a video file
             writeTextToImage(filename, imageText, currentDaymode)
-        except:
-            pass
+            drawSpinnyOverlay = True
+            if drawSpinnyOverlay:
+                drawSpinny(filename,dt)
+        except BaseException as e:
+            logging.warning (e)
+
     if createLockFile and motionTrackOn:
         createSyncLockFile(filename)
     # Process currentCount for next image if number sequence is enabled
@@ -1092,7 +1196,7 @@ def postImageProcessing(numberon, counterstart, countermax, counter,
                     counter = counterstart
                 else:
                     counter = counterstart + countermax + 1
-                    logging.warn("Exceeded Image Count numberMax=%i for %s \n",
+                    logging.warning("Exceeded Image Count numberMax=%i for %s \n",
                                  countermax, filename)
         # write next image counter number to dat file
         writeCount = str(counter)
@@ -1106,7 +1210,8 @@ def postImageProcessing(numberon, counterstart, countermax, counter,
         logging.info("Next Counter=%s %s", writeCount, counterpath)
     return counter
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def getVideoName(path, prefix, numberon, counter):
     """ build image file names by number sequence or date/time"""
     if numberon:
@@ -1121,13 +1226,18 @@ def getVideoName(path, prefix, numberon, counter):
                            rightNow.hour, rightNow.minute, rightNow.second))
     return filename
 
-#------------------------------------------------------------------------------
-def getImageName(path, prefix, numberon, counter):
-    """ build image file names by number sequence or date/time """
+
+# ------------------------------------------------------------------------------
+def getImageName(path, prefix, numberon, counter, round_to):
+    """
+    build image file names by number sequence or date/time
+    round_to the closest multiple
+    """
+
     if numberon:
         filename = os.path.join(path, prefix + str(counter) + imageFormat)
     else:
-        rightNow = datetime.datetime.now()
+        rightNow = round_time_down(datetime.datetime.now(), round_to)  # rightNow...rounded
         filename = ("%s/%s%04d%02d%02d-%02d%02d%02d%s"
                     % (path, prefix,
                        rightNow.year, rightNow.month, rightNow.day,
@@ -1135,7 +1245,36 @@ def getImageName(path, prefix, numberon, counter):
                        imageFormat))
     return filename
 
-#------------------------------------------------------------------------------
+
+def getImageNameAtTime(path, prefix, numberon, counter, at_time, file_by_day):
+    """
+    build image file names by number sequence or specified date/time
+    @:param file_by_day Add "daily-photos/2000-01-30/" to the path, depending on at_time's date
+    """
+    if file_by_day:
+        path_by_day = ("daily-photos/%04d-%02d-%02d" % (at_time.year, at_time.month, at_time.day))
+        path = os.path.join(path,path_by_day)
+        os.makedirs(path,exist_ok=True)
+    if numberon:
+        filename = os.path.join(path, prefix + str(counter) + imageFormat)
+    else:
+        filename = ("%s/%s%04d-%02d-%02dT%02d-%02d-%02d%s"
+                    % (path, prefix,
+                       at_time.year, at_time.month, at_time.day,
+                       at_time.hour, at_time.minute, at_time.second,
+                       imageFormat))
+    return filename
+
+
+# ------------------------------------------------------------------------------
+def round_time_down(dt, round_to):
+    """ round a given time down to a multiple of round_to (seconds) """
+    seconds = (dt - dt.min).seconds
+    rounding = (seconds) // round_to * round_to  #
+    return dt + datetime.timedelta(0, rounding - seconds, -dt.microsecond)
+
+
+# ------------------------------------------------------------------------------
 def takeTrackQuickPic(image, filename):
     """ Enlarge and Save stream image if motionTrackQuickPic=True"""
     big_image = cv2.resize(image, (bigImageWidth, bigImageHeight))
@@ -1143,7 +1282,8 @@ def takeTrackQuickPic(image, filename):
     logging.info("Saved %ix%i Image to %s",
                  bigImageWidth, bigImageHeight, filename)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def showBox(filename):
     """
     Show stream image detection area on image to align camera
@@ -1153,64 +1293,144 @@ def showBox(filename):
     Adjust track config.py file motionTrackTrigLen as required.
     """
     working_image = cv2.imread(filename)
-    x1y1 = (int((imageWidth - CAMERA_WIDTH)/2),
-            int((imageHeight - CAMERA_HEIGHT)/2))
+    x1y1 = (int((imageWidth - CAMERA_WIDTH) / 2),
+            int((imageHeight - CAMERA_HEIGHT) / 2))
     x2y2 = (x1y1[0] + CAMERA_WIDTH,
             x1y1[1] + CAMERA_HEIGHT)
     cv2.rectangle(working_image, x1y1, x2y2, LINE_COLOR, LINE_THICKNESS)
     cv2.imwrite(filename, working_image)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def takeDayImage(filename, cam_sleep_time):
     """ Take a Day image using exp=auto and awb=auto """
     with picamera.PiCamera() as camera:
         camera.resolution = (imageWidth, imageHeight)
         camera.vflip = imageVFlip
         camera.hflip = imageHFlip
-        camera.rotation = imageRotation # Valid values are 0, 90, 180, 270
+        camera.rotation = imageRotation  # Valid values are 0, 90, 180, 270
         # Day Automatic Mode
         camera.exposure_mode = 'auto'
-        camera.awb_mode = 'auto'
+        camera.awb_mode = awbMode
         if imageGrayscale:
             camera.color_effects = (128, 128)
-        time.sleep(cam_sleep_time) # use motion or TL camera sleep to get AWB
+        if awbMode=='auto':
+            time.sleep(cam_sleep_time)  # use motion or TL camera sleep to get AWB
         if imagePreview:
             camera.start_preview()
-        if imageFormat == ".jpg":   # Set quality if image is jpg
+        if imageFormat == ".jpg":  # Set quality if image is jpg
             camera.capture(filename, quality=imageJpegQuality)
         else:
             camera.capture(filename)
         camera.close()
 
-    if imageShowStream:    # Show motion area on full image to align camera
+    if imageShowStream:  # Show motion area on full image to align camera
         showBox(filename)
 
-    logging.info("camSleepSec=%.2f exp=auto awb=auto Size=%ix%i ",
-                 cam_sleep_time, imageWidth, imageHeight)
+    logging.info("camSleepSec=%.2f exp=auto awb=%s Size=%ix%i ",
+                 cam_sleep_time, awbMode, imageWidth, imageHeight)
     # showDateOnImage displays FilePath so avoid showing twice
     if not showDateOnImage:
         logging.info("FilePath  %s", filename)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+def takeDayImageOptimsedForTimelapse(filename,cam_sleep_time):
+    global lastShutterSpeed
+    """
+     Use settings to minimise flicker, and allow twilight to be dark
+     Specifically set :
+     see https://picamera.readthedocs.io/en/release-1.13/recipes1.html
+     wb: fixed
+     iso: fixed (200 default)
+     gains: exposure_mode : 'auto'
+          : could fix (via setting to 'auto' then 'off', but cannot directly set the analog and digital gains,
+          : and this disables exposure_speed giving the proposed shutter_speed
+     exp: exposure_max: don't allow very long exposures, to enable scene to darken. 0 for no limits
+          exp-smoothed: ask the camera for it's exposure_speed, and slowly vary the actual setting (aka
+                      shutter_speed) in this direction. This is intended to stop flicker.
+    """
+    with picamera.PiCamera() as camera:
+        camera.resolution = (imageWidth, imageHeight)
+        camera.vflip = imageVFlip
+        camera.hflip = imageHFlip
+        camera.rotation = imageRotation  # Valid values are 0, 90, 180, 270
+        camera.iso = dayFixedISO
+        camera.awb_mode = awbMode      # generally NOT auto for timelapse
+        camera.exposure_mode = 'auto' # set to 'off' will prevent camera.exposure_speed working
+
+        if imageGrayscale:
+            camera.color_effects = (128, 128)
+
+        if (exposureMax>0 or exposureSmoothed):
+            camera.shutter_speed = 0 # special value to allow query of actual shutter_speed via  exposure_speed
+            # Wait to let camera read the scene to determine shutter speed
+            time.sleep(cam_sleep_time)
+            proposed_shutter_speed = camera.exposure_speed
+            modified_shutter_speed = proposed_shutter_speed
+            if exposureSmoothed and lastShutterSpeed > 0:
+                # Allow to change by 1/1000 of a second (1ms,1000us) per photo
+                shutter_speed_increment = 1000
+                if modified_shutter_speed > lastShutterSpeed + shutter_speed_increment:
+                    modified_shutter_speed   = lastShutterSpeed + shutter_speed_increment
+                elif modified_shutter_speed < lastShutterSpeed - shutter_speed_increment:
+                    modified_shutter_speed   = lastShutterSpeed - shutter_speed_increment
+
+            if (exposureMax>0):
+                # Clip to max
+                modified_shutter_speed = min(modified_shutter_speed,exposureMax)
+
+            camera.shutter_speed = modified_shutter_speed
+            logging.info("smoothed: {} sleep:{}s analog_g: {} digital_g: {} expMax: {}us "
+                          "proposed_ss: {}us modified_ss: {}us (last:{}us)".format(
+                          exposureSmoothed, cam_sleep_time,camera.analog_gain,camera.digital_gain, exposureMax,
+                          proposed_shutter_speed,modified_shutter_speed,lastShutterSpeed)
+            )
+            lastShutterSpeed = modified_shutter_speed
+        else:
+            logging.info("filename: {} expSmoothed: {} sleep:{}s analog_gain: {} digital_gain: {} exposureMax: {} "
+                          "shutter_speed: {}us".format(
+                          filename,exposureSmoothed, cam_sleep_time, camera.analog_gain, camera.digital_gain,
+                          exposureMax,camera.shutter_speed)
+            )
+
+
+        if imagePreview:
+            camera.start_preview()
+        if imageFormat == ".jpg":  # Set quality if image is jpg
+            camera.capture(filename, quality=imageJpegQuality)
+        else:
+            camera.capture(filename)
+        camera.close()
+
+    #logging.info("camSleepSec=%.2f awb=%s Size=%ix%i ",
+#                 cam_sleep_time, awbMode, imageWidth, imageHeight)
+    # showDateOnImage displays FilePath so avoid showing twice
+    if not showDateOnImage:
+        logging.info("FilePath  %s", filename)
+
+
+# ------------------------------------------------------------------------------
 def getShut(pxAve):
     """
     Calculate a shutter speed based on image pixel average
     """
     px = pxAve + 1  # avoid division by zero
     offset = nightMaxShut - ((nightMaxShut / float(nightDarkThreshold) * px))
-    brightness = offset * (1/float(nightDarkAdjust))
+    brightness = offset * (1 / float(nightDarkAdjust))
     # hyperbolic curve + brightness adjust
     shut = (nightMaxShut * (1 / float(px))) + brightness
     return int(shut)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def takeNightImage(filename, pixelAve):
     """ Take low light Twilight or Night image """
     with picamera.PiCamera() as camera:
         camera.resolution = (imageWidth, imageHeight)
         camera.vflip = imageVFlip
         camera.hflip = imageHFlip
-        camera.rotation = imageRotation # valid values are 0, 90, 180, 270
+        camera.rotation = imageRotation  # valid values are 0, 90, 180, 270
         if imageGrayscale:
             camera.color_effects = (128, 128)
         time.sleep(1)
@@ -1235,7 +1455,7 @@ def takeNightImage(filename, pixelAve):
                              imageWidth, imageHeight,
                              pixelAve, nightBlackThreshold,
                              shut2Sec(nightMaxShut), nightMaxISO, nightSleepSec)
-            else: # Dark Threshold (Between Twilight and Black)
+            else:  # Dark Threshold (Between Twilight and Black)
                 camShut = getShut(pixelAve)
                 if camShut > nightMaxShut:
                     camShut = nightMaxShut
@@ -1251,18 +1471,19 @@ def takeNightImage(filename, pixelAve):
             camera.capture(filename, format='jpeg', quality=imageJpegQuality)
         else:
             camera.capture(filename)
-        camera.framerate = 5   # Adhoc Fix for Stretch camera freeze issue
-                               # Perform sudo rpi-update
+        camera.framerate = 5  # Adhoc Fix for Stretch camera freeze issue
+        # Perform sudo rpi-update
         camera.close()
 
-    if imageShowStream:    # Show motion area on full image to align camera
+    if imageShowStream:  # Show motion area on full image to align camera
         showBox(filename)
 
     # showDateOnImage displays FilePath to avoid showing twice
     if not showDateOnImage:
         logging.info("FilePath %s", filename)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def takeQuickTimeLapse(moPath, imagePrefix, NumOn, motionNumCount,
                        currentDayMode, NumPath):
     """ Take a quick timelapse sequence using yield if motion triggered """
@@ -1297,7 +1518,8 @@ def takeQuickTimeLapse(moPath, imagePrefix, NumOn, motionNumCount,
     logging.info('End Sequence Total %i Images in %i seconds',
                  imgCnt, timelapseDiff)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def takeVideo(filename, duration, fps=25):
     """ Take a short motion video if required """
     # Working folder for h264 videos
@@ -1360,7 +1582,8 @@ def takeVideo(filename, duration, fps=25):
                        motionPrefix)
         createSyncLockFile(filename)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def createSyncLockFile(imagefilename):
     """
     If required create a lock file to indicate file(s) to process
@@ -1379,7 +1602,8 @@ def createSyncLockFile(imagefilename):
         f.write(filecontents)
         f.close()
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def trackPoint(grayimage1, grayimage2):
     """
     Process two cropped grayscale images.
@@ -1413,12 +1637,13 @@ def trackPoint(grayimage1, grayimage2):
             if cArea > biggestArea:
                 biggestArea = cArea
                 (x, y, w, h) = cv2.boundingRect(c)
-                cx = int(x + w/2)   # x center point of contour
-                cy = int(y + h/2)   # y center point of contour
+                cx = int(x + w / 2)  # x center point of contour
+                cy = int(y + h / 2)  # y center point of contour
                 movementCenterPoint = [cx, cy]
     return movementCenterPoint
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def trackDistance(mPoint1, mPoint2):
     """
     Return the triangulated distance between two tracking locations
@@ -1428,7 +1653,8 @@ def trackDistance(mPoint1, mPoint2):
     trackLen = abs(math.hypot(x2 - x1, y2 - y1))
     return trackLen
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def getStreamPixAve(streamData):
     """
     Calculate the average pixel values for the specified stream
@@ -1437,7 +1663,8 @@ def getStreamPixAve(streamData):
     pixAverage = int(np.average(streamData[..., 1]))
     return pixAverage
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def checkIfDayStream(currentDayMode, image):
     """ Try to determine if it is day, night or twilight."""
     dayPixAverage = 0
@@ -1448,7 +1675,8 @@ def checkIfDayStream(currentDayMode, image):
         currentDayMode = False
     return currentDayMode
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def timeToSleep(currentDayMode):
     """
     Based on weather it is day or night (exclude twilight)
@@ -1470,7 +1698,8 @@ def timeToSleep(currentDayMode):
         sleepMode = False
     return sleepMode
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def getSchedStart(dateToCheck):
     """
     This function will try to extract a valid date/time from a
@@ -1479,15 +1708,15 @@ def getSchedStart(dateToCheck):
     and schedule for current date at extracted time
     """
     goodDateTime = datetime.datetime.now()
-    if len(dateToCheck) > 1:   # Check if timelapseStartAt is set
+    if len(dateToCheck) > 1:  # Check if timelapseStartAt is set
         try:
             # parse and convert string to date/time or return error
             goodDateTime = parse(dateToCheck)
         except:
             # Is there a colon indicating possible time format exists
             if ":" in dateToCheck:
-                timeTry = dateToCheck[dateToCheck.find(":") -2:]
-                        # Try to extract time only from string
+                timeTry = dateToCheck[dateToCheck.find(":") - 2:]
+                # Try to extract time only from string
                 try:
                     # See if a valid time is found returns with current day
                     goodDateTime = parse(timeTry)
@@ -1497,22 +1726,42 @@ def getSchedStart(dateToCheck):
                     logging.error('Use a Valid Date and/or Time '
                                   'Format Eg "DD-MMM-YYYY HH:MM:SS"')
                     goodDateTime = datetime.datetime.now()
-                    logging.warn("Resetting date/time to Now: %s",
+                    logging.warning("Resetting date/time to Now: %s",
                                  goodDateTime)
         # Check if date/time is past
         if goodDateTime < datetime.datetime.now():
             if ":" in dateToCheck:  # Check if there is a time component
                 # Extract possible time component
-                timeTry = dateToCheck[dateToCheck.find(":") -2:]
+                timeTry = dateToCheck[dateToCheck.find(":") - 2:]
                 try:
                     # parse for valid time
                     # returns current day with parsed time
                     goodDateTime = parse(timeTry)
                 except:
-                    pass   # Do Nothing
+                    pass  # Do Nothing
     return goodDateTime
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+def getTimeEnd(timeToCheck):
+    """
+    This function will try to extract a valid time from a
+    formatted string variable
+    """
+    goodTime = datetime.time(23, 59, 59, 999999)  # last time possible
+    if len(timeToCheck) > 1:  # Check if timelapseEndAt is set
+        try:
+            # parse and convert string to date/time or throw
+            goodTime = parse(timeToCheck).time()
+        except:
+            logging.error("Bad Time Format %s", timeToCheck)
+            logging.error('Use a valid Time Format Eg "HH:MM:SS"')
+            logging.warning("Resetting date/time to blank: %s",
+                         goodTime)
+    return goodTime
+
+
+# ------------------------------------------------------------------------------
 def checkSchedStart(schedDate):
     """
     Based on schedule date setting see if current
@@ -1525,7 +1774,18 @@ def checkSchedStart(schedDate):
         startStatus = True  # sched date/time has passed so start sequence
     return startStatus
 
-#------------------------------------------------------------------------------
+
+def checkTimeEnd(schedTime):
+    """
+    Based on schedule time setting see if current
+    time is past and return boolean
+    to indicate processing can end for
+    timelapse or motiontracking
+    """
+    return schedTime > datetime.datetime.now().time()
+
+
+# ------------------------------------------------------------------------------
 def checkForTimelapse(timelapseStart):
     """ Check if timelapse timer has expired """
     rightNow = datetime.datetime.now()
@@ -1537,7 +1797,8 @@ def checkForTimelapse(timelapseStart):
         timelapseFound = False
     return timelapseFound
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 def timolo():
     """
     Main motion and or motion tracking
@@ -1553,7 +1814,7 @@ def timolo():
     mostr = ""  # Used to display if motion is selected
     moCnt = "non"
     tlCnt = "non"
-    daymode = False # Keep track of night and day based on dayPixAve
+    daymode = False  # Keep track of night and day based on dayPixAve
     # Forcing motion if no motion for motionForce time exceeded
     forceMotion = False
     motionFound = False
@@ -1566,6 +1827,7 @@ def timolo():
     timelapseExitStart = timelapseStart
     checkMotionTimer = timelapseStart
     startTL = getSchedStart(timelapseStartAt)
+    endTL = getTimeEnd(timelapseEndAt)
     startMO = getSchedStart(motionStartAt)
     trackLen = 0.0
     if spaceTimerHrs > 0:
@@ -1581,7 +1843,7 @@ def timolo():
                                                 timelapseNumStart)
             tlCnt = str(timelapseNumCount)
     else:
-        logging.warn("Timelapse is Suppressed per timelapseOn=%s",
+        logging.warning("Timelapse is Suppressed per timelapseOn=%s",
                      timelapseOn)
         stopTimeLapse = True
     logging.info("Start PiVideoStream ....")
@@ -1616,6 +1878,7 @@ def timolo():
         stopMotion = True
     daymode = checkIfDayStream(daymode, image2)
     pixAve = getStreamPixAve(image2)
+    logging.info("getStreamPixAve: {}".format(pixAve))  # could use to slowly change exposure
     if timelapseOn and motionTrackOn:
         tlstr = " and " + tlstr
     displayInfo(moCnt, tlCnt)  # Display config.py settings
@@ -1623,13 +1886,7 @@ def timolo():
         logging.info("logDataToFile=%s Logging to Console Disabled.",
                      logDataToFile)
         logging.info("Sending Console Messages to %s", logFilePath)
-        logging.info("Entering Loop for %s%s", mostr, tlstr)
-    else:
-        if pluginEnable:
-            logging.info("plugin %s - Start %s%s Loop ...",
-                         pluginName, mostr, tlstr)
-        else:
-            logging.info("Start %s%s Loop ... ctrl-c Exits", mostr, tlstr)
+    logging.info("Start %s%s Loop. Plugin %s... ctrl-c Exits", mostr, tlstr,pluginName)
     if motionTrackOn and not checkSchedStart(startMO):
         logging.info('Motion Track: motionStartAt = "%s"', motionStartAt)
         logging.info("Motion Track: Sched Start Set For %s  Please Wait ...",
@@ -1649,21 +1906,21 @@ def timolo():
             logging.warning("motionNumRecycle=%s and motionNumCount %i Exceeds %i",
                             motionNumRecycle, motionNumCount,
                             motionNumStart + motionNumMax)
-            logging.warn("Suppressing Further Motion Tracking")
-            logging.warn("To Reset: Change %s Settings or Archive Images",
+            logging.warning("Suppressing Further Motion Tracking")
+            logging.warning("To Reset: Change %s Settings or Archive Images",
                          configName)
-            logging.warn("Then Delete %s and Restart %s \n",
+            logging.warning("Then Delete %s and Restart %s \n",
                          motionNumPath, progName)
             takeMotion = False
             stopMotion = True
         if stopTimeLapse and stopMotion:
-            logging.warn("NOTICE: Both Motion and Timelapse Disabled")
-            logging.warn("per Num Recycle=False and "
+            logging.warning("NOTICE: Both Motion and Timelapse Disabled")
+            logging.warning("per Num Recycle=False and "
                          "Max Counter Reached or timelapseExitSec Settings")
-            logging.warn("Change %s Settings or Archive/Save Media Then",
+            logging.warning("Change %s Settings or Archive/Save Media Then",
                          configName)
-            logging.warn("Delete appropriate .dat File(s) to Reset Counter(s)")
-            logging.warn("Exiting %s %s \n", progName, progVer)
+            logging.warning("Delete appropriate .dat File(s) to Reset Counter(s)")
+            logging.warning("Exiting %s %s \n", progName, progVer)
             sys.exit(1)
         # if required check free disk space and delete older files (jpg)
         if spaceTimerHrs > 0:
@@ -1681,19 +1938,25 @@ def timolo():
             image2 = vs.read()
             # if daymode has changed, reset background
             # to avoid false motion trigger
-            if daymode != checkIfDayStream(daymode, image2):
-                daymode = not daymode
+            if (startTL and endTL):
+                # For scheduled timelapse, stay in daymode
+                daymode = True
+            else:
+                if daymode != checkIfDayStream(daymode, image2):
+                    daymode = not daymode
         pixAve = getStreamPixAve(image2)
-        rightNow = datetime.datetime.now() # refresh rightNow time
+        rightNow = datetime.datetime.now()  # refresh rightNow time
         if not timeToSleep(daymode):
             # Don't take images if noNightShots
             # or noDayShots settings are valid
-            if timelapseOn and checkSchedStart(startTL):
-               # Check for a scheduled date/time to start timelapse
+            # logging.info("timelapseOn {} checkSchedStart{} checkTimeEnd {} endTL {}".format(timelapseOn , checkSchedStart(startTL) , checkTimeEnd(endTL),endTL));
+            if timelapseOn and checkSchedStart(startTL) and checkTimeEnd(endTL):
+                # Check for a scheduled date/time to start timelapse
                 if firstTimeLapse:
                     firstTimeLapse = False
                     takeTimeLapse = True
                 else:
+                    # Consider just sleeping instead of spinning
                     takeTimeLapse = checkForTimelapse(timelapseStart)
                 if ((not stopTimeLapse) and takeTimeLapse and
                         timelapseExitSec > 0):
@@ -1712,13 +1975,13 @@ def timolo():
                         and (not timelapseNumRecycle)):
                     if (timelapseNumMax > 0 and
                             timelapseNumCount > (timelapseNumStart + timelapseNumMax)):
-                        logging.warn("timelapseNumRecycle=%s and Counter=%i Exceeds %i",
+                        logging.warning("timelapseNumRecycle=%s and Counter=%i Exceeds %i",
                                      timelapseNumRecycle, timelapseNumCount,
                                      timelapseNumStart + timelapseNumMax)
-                        logging.warn("Suppressing Further Timelapse Images")
-                        logging.warn("To RESET: Change %s Settings or Archive Images",
+                        logging.warning("Suppressing Further Timelapse Images")
+                        logging.warning("To RESET: Change %s Settings or Archive Images",
                                      configName)
-                        logging.warn("Then Delete %s and Restart %s \n",
+                        logging.warning("Then Delete %s and Restart %s \n",
                                      timelapseNumPath, progName)
                         # Suppress further timelapse images
                         takeTimeLapse = False
@@ -1757,7 +2020,7 @@ def timolo():
                                          timelapseExitSec)
                     imagePrefix = timelapsePrefix + imageNamePrefix
                     filename = getImageName(tlPath, imagePrefix,
-                                            timelapseNumOn, timelapseNumCount)
+                                            timelapseNumOn, timelapseNumCount, timelapseTimer)
                     logging.info("Stop PiVideoStream ...")
                     vs.stop()
                     time.sleep(motionStreamStopSec)
@@ -1804,7 +2067,7 @@ def timolo():
                 image2 = vs.read()
                 grayimage2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
                 movePoint2 = trackPoint(grayimage1, grayimage2)
-                if movePoint2 and startTrack:   # Two sets of movement required
+                if movePoint2 and startTrack:  # Two sets of movement required
                     trackLen = trackDistance(startPos, movePoint2)
                     # wait until track well started
                     if trackLen > TRACK_TRIG_LEN_MIN:
@@ -1863,7 +2126,7 @@ def timolo():
                     image2 = image1
                     grayimage1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
                     grayimage2 = grayimage1
-                    dotCount = showDots(motionDotsMax + 2) # New Line
+                    dotCount = showDots(motionDotsMax + 2)  # New Line
                     logging.info("No Motion Detected for %s minutes. "
                                  "Taking Forced Motion Image.",
                                  (motionForce / 60))
@@ -1950,8 +2213,8 @@ def timolo():
                                                                  daymode)
                             if motionRecentMax > 0:
                                 if not motionVideoOn:
-                                   # prevent h264 video files from
-                                   # being copied to recent
+                                    # prevent h264 video files from
+                                    # being copied to recent
                                     saveRecent(motionRecentMax,
                                                motionRecentDir,
                                                filename,
@@ -1991,7 +2254,88 @@ def timolo():
                     # show progress dots when no motion found
                     dotCount = showDots(dotCount)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+def TLbatteryLoop():
+    """
+    This is a special mode for basic, timed timelapses running on battery
+    Assumes "TLbattery" plugin is used
+    It just checks a schedule and takes dayMode photos
+    ImageStreaming, Motion, Twilight, etc are not used
+    """
+    checkMediaPaths()
+    timelapseNumCount = 0
+    tlstr = ""  # Used to display if timelapse is selected
+    tlCnt = "non"
+    daymode = True # Always day
+    startTL = getSchedStart(timelapseStartAt)
+    endTL = getTimeEnd(timelapseEndAt)
+
+    if spaceTimerHrs > 0:
+        lastSpaceCheck = datetime.datetime.now()
+
+    if not timelapseOn or pluginName != "TLbattery":
+        logging.error("Misconfigured. Use TLbattery plugin for timelapse only.")
+        logging.warning("Exiting %s %s \n", progName, progVer)
+        sys.exit(1)
+    tlstr = "TimeLapse"
+    # Check if timelapse subDirs reqd and create one if non exists
+    tlPath = subDirChecks(timelapseSubDirMaxHours,
+                          timelapseSubDirMaxFiles,
+                          timelapseDir, timelapsePrefix)
+    if timelapseNumOn:
+        timelapseNumCount = getCurrentCount(timelapseNumPath,
+                                            timelapseNumStart)
+        tlCnt = str(timelapseNumCount)
+
+    if logDataToFile:
+        logging.info("Sending Console Messages to %s", logFilePath)
+
+    timelapseNumCount = getCurrentCount(timelapseNumPath,timelapseNumStart)
+
+    while True:  # Start main program Loop.
+        # if required check free disk space and delete older files (jpg)
+        right_now = datetime.datetime.now();
+        next_photo_time = time_of_next_event(timelapseTimer)
+        right_now = datetime.datetime.now()
+        sleep_for_sec = (next_photo_time - right_now).total_seconds()
+        if sleep_for_sec>0:
+            time.sleep(sleep_for_sec)
+        #logging.info("right_now {} Active from {} to {}".format(right_now,startTL,endTL))
+
+        if startTL.time() < right_now.time() < endTL: # endTL is already a time!
+            imagePrefix = timelapsePrefix + imageNamePrefix
+            filename = getImageNameAtTime(tlPath, imagePrefix,timelapseNumOn, timelapseNumCount, next_photo_time, fileByDay)
+            logging.info("Saving to {}".format(filename))
+
+            takeDayImageOptimsedForTimelapse(filename, timelapseCamSleep)
+            timelapseNumCount = postImageProcessing(timelapseNumOn,
+                                                    timelapseNumStart,
+                                                    timelapseNumMax,
+                                                    timelapseNumCount,
+                                                    timelapseNumRecycle,
+                                                    timelapseNumPath,
+                                                    filename, daymode,next_photo_time)
+
+            if timelapseRecentMax > 0:
+                saveRecent(timelapseRecentMax, timelapseRecentDir,filename, imagePrefix)
+            if timelapseMaxFiles > 0:
+                deleteOldFiles(timelapseMaxFiles, timelapseDir, imagePrefix)
+            tlPath = subDirChecks(timelapseSubDirMaxHours,
+                                  timelapseSubDirMaxFiles,
+                                  timelapseDir, timelapsePrefix)
+
+
+# ------------------------------------------------------------------------------
+def time_of_next_event(interval_seconds):
+    """
+    Return the next interval. For example now = 11:00:01, interval_seconds = 5, returns 11:00:05
+    """
+    last_event = round_time_down(datetime.datetime.now(), interval_seconds)
+    next_event = last_event + datetime.timedelta(0, interval_seconds)
+    return next_event
+
+# ------------------------------------------------------------------------------
 def videoRepeat():
     """
     This is a special dash cam video mode
@@ -2039,7 +2383,7 @@ def videoRepeat():
                                 videoNumOn, videoNumCounter)
         takeVideo(filename, videoDuration, videoFPS)
         timeUsed = (datetime.datetime.now() - videoStartTime).total_seconds()
-        timeRemaining = (videoTimer*60 - timeUsed) / 60.0
+        timeRemaining = (videoTimer * 60 - timeUsed) / 60.0
         videoCount += 1
         if videoNumOn:
             videoNumCounter += 1
@@ -2068,7 +2412,7 @@ def videoRepeat():
                 keepRecording = False
                 errorText = ("Stop Recording Since videoTimer=%i minutes Exceeded \n",
                              videoTimer)
-                logging.warn(errorText)
+                logging.warning(errorText)
                 sys.stdout.write(errorText)
             else:
                 logging.info("Remaining Time %.1f of %i minutes",
@@ -2078,7 +2422,8 @@ def videoRepeat():
     logging.info("Exit: %i Videos Recorded in Folder %s",
                  videoCount, videoPath)
 
-#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 if __name__ == '__main__':
     """ Initialization prior to launching appropriate pi-timolo options """
     logging.info("Testing if Pi Camera is in Use")
@@ -2100,6 +2445,8 @@ if __name__ == '__main__':
     try:
         if videoRepeatOn:
             videoRepeat()
+        elif pluginName == "TLbattery":
+            TLbatteryLoop()
         else:
             timolo()
     except KeyboardInterrupt:
@@ -2119,5 +2466,5 @@ if __name__ == '__main__':
             if os.path.isfile(pluginCurrentpyc):
                 os.remove(pluginCurrentpyc)
     except OSError as err:
-        logging.warn("Failed To Remove File %s - %s", pluginCurrentpyc, err)
+        logging.warning("Failed To Remove File %s - %s", pluginCurrentpyc, err)
         sys.exit(1)

@@ -105,7 +105,7 @@ export class WebFileSysS3 {
             let xml = $(data);
             let info = this.getInfoFromS3Data(xml);
             // info: {Key: "index.html", LastModified: "2019-10-09T12:52:31.000Z", Size: "4.5 kB", Type: "file"}
-            console.log(info);
+            // console.log(info);
             info.files.forEach((e) => {
                 // s3 gives back foo/bar.txt
                 // we need just bar.txt
@@ -216,6 +216,23 @@ export class WebFileSysS3 {
     isIgnored(path) {
         return $.inArray(path, this.IGNORED_ELEMENTS) !== -1;
     }
+
+    /**
+     * A Dash Dir contains ONE .mpd file and ZERO folders
+     * @returns {string} filename of first file matching *.mpd, or ""
+     */
+    dashFile(path) {
+        let dir_files = this.ls(path);
+        let mpd_entries = dir_files.filter(function (d) {
+            return /.*.mpd$/.test(d);
+        });
+        if (mpd_entries.length > 0) {
+            return path.slashEnd(true) + mpd_entries[0];
+        } else {
+            return "";
+        }
+    }
+
 
     /**
      * A Dash Dir contains ONE .mpd file and ZERO folders

@@ -113,3 +113,14 @@ String.prototype.slashStart = function (slash) {
         return String(this.substr(i));
     }
 };
+
+/**
+ *
+ * @param slash
+ * @returns {string} Filepath without the http://hostname:port part
+ * http://foo.bar/this/that.html -> /this/that.html
+ *  * http://foo.bar/that.html -> /that.html
+ */
+String.prototype.rootRel = function () {
+    return this.replace(location.origin,"");
+};
