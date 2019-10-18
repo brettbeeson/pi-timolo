@@ -11,9 +11,9 @@ n_encodings=1
 scales=("640x360")
 crf=(28)
 
-#n_encodings=3
-#scales=("640x360" "1280x720" "1920x1080")
-#crf=(28 24 23)
+n_encodings=3
+scales=("640x360" "1280x720" "1920x1080")
+crf=(28 24 23)
 
 function basestname() {
     base=$(basename "$1")

@@ -9,16 +9,13 @@
 # ---------------
 # root
 # |-- daily-videos
-# |---- 2019-01-02T10.mp4           <-- create this
-# |-- daily-photos 					<-- search for isoformat dates
+# |---- 2019-01-02.mp4           	<-- create these
+# |-- daily-photos 			<-- search here for isoformat dates
 # |---- 2019-01-02
-# |------- 2019-01-01T10-10-10.jpg	<--- search for jpg to make vieos
+# |------- 2019-01-01T10-10-10.jpg	<--- search for jpg to make videos
 # |------- 2019-01-01T10-10-20.jpg
 
-# If true, cp (or cp -r) to quick-links, instead of ln -s
-# Required for file-systems without symblinks (eg. s3)
-
-run_dashify=false
+run_dashify=true
 
 TLMM=/usr/local/bin/tlmm.py
 DASHIFY=/usr/local/bin/dashify.sh
@@ -52,7 +49,6 @@ if [ ! -d "$dailyphotos" ]; then
 fi
 
 tmpdir=$(mktemp -d)
-echo ---------------------------------------------------------------
 echo $(date --iso-8601=minutes): Starting makedailymovies.sh
 echo Tmp: $tmpdir
 echo Root: $ROOTDIR
@@ -95,8 +91,8 @@ for d in "$dailyphotos"/*/; do
 			rm $tmpdir/$day*.mp4 2>/dev/null || true
 			rm $tmpdir/$day* 2>/dev/null || true
 			# Rename from 2019-01-01T15_to_2019-01-01T19.mp4 to 2019-01-01.mp4
-			mv "$video_made" "$ROOTDIR"/$dailyphotos/"$day".mp4
-			video_made="$ROOTDIR"/$dailyphotos/"$day".mp4
+			mv "$video_made" "$ROOTDIR"/$dailyvideos/"$day".mp4
+			video_made="$ROOTDIR"/$dailyvideos/"$day".mp4
 			if $run_dashify; then
 				echo Dashify video: $video_made
 				dash_dir=$($DASHIFY "$video_made" $ROOTDIR/$dailyvideos/) || echo Error: dashify "$video_made" "$ROOTDIR/$d"
@@ -105,8 +101,8 @@ for d in "$dailyphotos"/*/; do
 		else
 			echo $day: Make video failed: code $madevideo. Check $(pwd)/tlmm.log
 			# Move them back
-			mv "$tmpdir"/"$day".mp4 "$ROOTDIR"/$dailyvideos
-			mv "$tmpdir"/"$day"* "$ROOTDIR"/$dailyvideos
+			mv "$tmpdir"/"$day".mp4 "$ROOTDIR"/$dailyvideos/
+			mv "$tmpdir"/"$day"* "$ROOTDIR"/$dailyvideos/
 			
 		fi
 	fi
@@ -114,5 +110,6 @@ for d in "$dailyphotos"/*/; do
 	rmdir "$tmpdir" > /dev/null 2>&1
 done
 
+echo Syncing changes
 # push changes to daily-movies (files, overwrites daily movies from early in the day)
-aws s3 sync $dailyvideos s3://tmv.brettbeeson.com.au/"$cam"/daily-videos
+aws s3 sync $ROOTDIR/$dailyvideos s3://tmv.brettbeeson.com.au/"$cam"/daily-videos
