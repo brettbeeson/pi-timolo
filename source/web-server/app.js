@@ -339,7 +339,7 @@ function showVideoInPreviewElement(filepath) {
 }
 
 function show_rel_video(video, days) {
-    let current_src = (new URL(video.attr('src')).pathname;
+    let current_src = (new URL(video.attr('src'))).pathname;
     // Remove hostname:port will pass to showFileInPreview, which needs webroot relative path
     let splut = splitPath(current_src.pathname);
     let current_video_d = moment(splut['filename'], DATE_FORMAT);
