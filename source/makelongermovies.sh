@@ -1,4 +1,4 @@
-#!/bin/bash -xv
+#!/bin/bash 
 #
 # Take the daily videos and combine them in to last week, last month and last year videos
 #
@@ -74,6 +74,7 @@ if [ ! -d "$longer_videos_dir" ]; then
 	fi
 fi
 
+echo $(date --iso-8601=minutes): Starting $0 
 echo Pulling latest daily-videos. Usually we have them locally, so this shouldnt run except on first/restart/etc.
 aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
 
