@@ -14,5 +14,10 @@
     <orderEntry type="library" name="dash.all" level="application" />
     <orderEntry type="library" name="jquery-3.3.1" level="application" />
     <orderEntry type="library" name="jquery-ui" level="application" />
+    <orderEntry type="library" name="video" level="application" />
+    <orderEntry type="library" name="videojs-dash" level="application" />
+    <orderEntry type="library" name="moment-with-locales" level="application" />
+    <orderEntry type="library" name="dash.all.debug" level="application" />
+    <orderEntry type="library" name="aws-sdk-2.283.1" level="application" />
   </component>
 </module>

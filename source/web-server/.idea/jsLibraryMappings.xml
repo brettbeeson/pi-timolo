@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootstrap, dash.all, jquery-3.3.1, jquery-3.3.1.slim, jquery-ui, popper}" />
+    <file url="PROJECT" libraries="{aws-sdk-2.283.1, bootstrap, dash.all, dash.all.debug, jquery-3.3.1, jquery-3.3.1.slim, jquery-ui, moment-with-locales, popper, video, videojs-dash}" />
   </component>
 </project>

@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/bootstrap4-datetimepicker" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/bootstrap4-datetimepicker" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libjs/bootstrap4-datetimepicker" vcs="Git" />
   </component>
 </project>
