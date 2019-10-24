@@ -13,13 +13,7 @@
 # |-- longer-videos
 # |---- last-2days.mp4           	<-- output
 # |---- last-weeks					<-- output
-# |-- quick-links
-# |---- yesterdays-video -> 		<-- symlink to longer-video/?.mp4
 
-# If true, cp (or cp -r) to quick-links, instead of ln -s
-# Required for file-systems without symblinks (eg. s3)
-copy_not_link=true
-quick_links=false
 run_dashify=true
 
 # Concat, dashify and quick-link
@@ -79,14 +73,10 @@ echo Pulling latest daily-videos. Usually we have them locally, so this shouldnt
 aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
 
 # Only run if there are daily videos newer the long-video
-# The directory's date changes *not* on files' dates changes,
-# but if the fat changes (i.e. new file, etc.). This captures newly added files - good!
-# The meaning of "today" changes, but we don't want to follow along "today" unless new videos are coming in.
 # BUT: in S3, directories don't really exist!
 # So use the oldest file in each directory instead to signify directory age
 oldest_daily_video=$(ls -tr  "$daily_videos_dir"/*.mp4 | tail -1)
 oldest_longer_video=$(ls -tr  "$longer_videos_dir"/*.mp4 | tail -1)
-
 
 # There are some longer-videos already
 if [ ! -z "$oldest_longer_video" ]; then
@@ -99,16 +89,6 @@ fi
 
 # tlconcat writes to cwd.
 cd "$longer_videos_dir" || exit 1
-
-# Each day, old videos need deleting and re-making:
-# eg. today 2000-01-03:
-# eg. delete 2000-01-01_to_2000-01-02 which was yesterday's
-# eg. make 2000-01-02_to_2000-01-03
-# Delete anything that doesn't end today.
-#rm -rf yesterday-video*
-#rm -rf weekly-video*
-#rm -rf monthly-video*
-#rm -rf complete-video*
 
 # Make new videos by concating daily-videos, dashify and add quick-links
 make_video 'yesterday'  	'yesterday' 'yesterday-video'	1

@@ -154,7 +154,7 @@ export class WebFileSysS3 {
 
 
     fileExists(filename) {
-        filename = filename.slashEnd(false);
+        filename = filename.slashStart(false);  // s3 cannot have "/" at start
         let exists = false;
         let s3_rest_url;
         s3_rest_url = this.createS3QueryUrl(filename);
@@ -244,7 +244,7 @@ export class WebFileSysS3 {
      */
     isDashDir(path) {
         if (!this.isDir(path)) {
-            return false;
+            //return false;
         }
         let dir_files = this.ls(path);
         let mpd_entries = dir_files.filter( (d)=> {

@@ -64,6 +64,14 @@ export function bytesToHumanReadable(sizeInBytes) {
     return Math.max(sizeInBytes, 0.1).toFixed(1) + units[i];
 }
 
+function parentDir(path) {
+    path = path.slashEnd(false);    // daily-video/2019-11-01.mp4
+    let elements = path.split("/");       //daily-video,2019-11-01.mp4
+    if (elements.length <= 2) return "";    //"/x".split("") =  ["/", "x"]
+    elements.pop();
+    return elements.join("/");
+}
+
 /**
  *
  * @param slash

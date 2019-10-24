@@ -17,14 +17,15 @@
       <change beforePath="$PROJECT_DIR$/app.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js.bak" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bbutils.js" beforeDir="false" afterPath="$PROJECT_DIR$/bbutils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/.htaccess" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/files/screenshot.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/bootstrap-datetimepicker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libcss/bootstrap-datetimepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/bootstrap-datetimepicker.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libcss/bootstrap-datetimepicker.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/bootstrap-datetimepicker.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libjs/bootstrap-datetimepicker.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/bootstrap-datetimepicker.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libcss/bootstrap-datetimepicker.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libcss/bootstrap-datetimepicker.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libjs/bootstrap-datetimepicker.min.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/next.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/prev.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/prev.svg" beforeDir="false" />
@@ -44,17 +45,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-87">
-              <caret line="341" column="49" selection-start-line="341" selection-start-column="49" selection-end-line="341" selection-end-column="49" />
+            <state>
+              <caret column="4" selection-start-column="4" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#49#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="75" column="37" selection-start-line="75" selection-start-column="37" selection-end-line="75" selection-end-column="37" />
+            <state relative-caret-position="359">
+              <caret line="148" column="69" selection-start-line="148" selection-start-column="64" selection-end-line="148" selection-end-column="69" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -62,20 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web-filesys-s3.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="11" selection-start-line="11" selection-end-line="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.css">
+        <entry file="file://$PROJECT_DIR$/bbutils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="420">
+              <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -92,36 +87,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>let base</find>
+      <find>awe</find>
+      <find>datetime</find>
+      <find>button</find>
+      <find>pre</find>
+      <find>foreach</find>
+      <find>_vid</find>
+      <find>search</find>
+      <find>buttons</find>
+      <find>notice</find>
+      <find>alert</find>
+      <find>jquery</find>
+      <find>no photof ro</find>
+      <find>curretn</find>
+      <find>refresh</find>
+      <find>current</find>
       <find>current_dir</find>
-      <find>showFileInPreviewElement</find>
-      <find>disActivateAllButtons</find>
-      <find>latest</find>
-      <find>image-hours-ago</find>
-      <find>title</find>
-      <find>ago</find>
-      <find>&lt;a</find>
-      <find>/a&gt;</find>
-      <find>rel-link</find>
-      <find>show_file_in_previewer_event</find>
-      <find>value</find>
-      <find>src</find>
-      <find>disable_button</find>
-      <find>latest-v</find>
-      <find>d-name</find>
-      <find>hours-ag</find>
-      <find>latest-video</find>
-      <find>video</find>
-      <find>video-</find>
-      <find>-video</find>
-      <find>rel-</find>
-      <find>Caption</find>
-      <find>cd(</find>
-      <find>cd</find>
-      <find>image-hours-</find>
-      <find>BUCKET</find>
-      <find>height</find>
-      <find>show_file_in_previewer</find>
+      <find>blockui</find>
+      <find>blockIn</find>
+      <find>blocked</find>
+      <find>link</find>
+      <find>no photo</find>
+      <find>&quot;No</find>
+      <find>.show(</find>
+      <find>specific</find>
+      <find>blockable</find>
+      <find>console</find>
+      <find>blockInterface</find>
+      <find>blockInterface(e.target);</find>
+      <find>popper</find>
+      <find>growl</find>
     </findStrings>
     <replaceStrings>
       <replace>cam_dir</replace>
@@ -134,6 +129,7 @@
       <replace>value</replace>
       <replace>&lt;li</replace>
       <replace>/li&gt;</replace>
+      <replace>blockInterface();</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -162,10 +158,10 @@
         <option value="$PROJECT_DIR$/apple.html" />
         <option value="$PROJECT_DIR$/date.js" />
         <option value="$PROJECT_DIR$/date.html" />
-        <option value="$PROJECT_DIR$/bbutils.js" />
         <option value="$PROJECT_DIR$/test.html" />
         <option value="$PROJECT_DIR$/web-filesys-s3.js" />
         <option value="$PROJECT_DIR$/index.css" />
+        <option value="$PROJECT_DIR$/bbutils.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
@@ -182,7 +178,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="67" />
     <option name="y" value="25" />
     <option name="width" value="927" />
@@ -219,24 +215,26 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="HTML" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/js" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/vendor" />
-      <recent name="$PROJECT_DIR$/vendor/s3-bucket-listing" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$/libjs" />
       <recent name="$PROJECT_DIR$/libcss" />
       <recent name="$PROJECT_DIR$/lib" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/js" />
+      <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/vendor" />
+      <recent name="$PROJECT_DIR$/vendor/s3-bucket-listing" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -315,29 +313,30 @@
       <workItem from="1570519859732" duration="57549000" />
       <workItem from="1571013795954" duration="11787000" />
       <workItem from="1571062401522" duration="62400000" />
-      <workItem from="1571379183131" duration="354000" />
+      <workItem from="1571379183131" duration="15123000" />
+      <workItem from="1571715572252" duration="27824000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="200898000" />
+    <option name="totallyTimeSpent" value="243491000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4964029" visible="true" weight="0.3786885" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4964029" visible="true" weight="0.15519126" />
       <window_info id="Structure" order="1" sideWeight="0.50359714" side_tool="true" weight="0.24972677" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32937366" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3423326" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32937366" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4913607" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32937366" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32937366" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" />
@@ -369,33 +368,39 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/app.js</url>
-          <line>390</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app.js</url>
-          <line>341</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app.js</url>
-          <line>288</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app.js</url>
-          <line>396</line>
+          <line>517</line>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app.js</url>
-          <line>373</line>
-          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -554,17 +559,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/a.html" />
-    <entry file="file://$PROJECT_DIR$/js/bootstrap.min.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/bootstrap-datetimepicker.js" />
-    <entry file="file://$PROJECT_DIR$/js/dash.all.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/jquery-ui.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -584,13 +579,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bbutils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -653,20 +641,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-87">
-          <caret line="341" column="49" selection-start-line="341" selection-start-column="49" selection-end-line="341" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/jquery-3.3.1.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="41578" selection-start-line="1" selection-start-column="41578" selection-end-line="1" selection-end-column="41578" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/video.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="93093">
@@ -674,27 +648,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/js/jquery-3.3.1.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="75" column="37" selection-start-line="75" selection-start-column="37" selection-end-line="75" selection-end-column="37" />
+        <state relative-caret-position="21">
+          <caret line="1" column="22494" selection-start-line="1" selection-start-column="22494" selection-end-line="1" selection-end-column="22494" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="http://tmv.brettbeeson.com.au/app.js">
+      <provider selected="true" editor-type-id="httpFileEditor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/bootstrap.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="5" column="54469" selection-start-line="5" selection-start-column="54469" selection-end-line="5" selection-end-column="54469" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/bootstrap-datetimepicker.min.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery.blockUI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="67" column="28" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="28" />
           <folding>
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web-filesys-s3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="89" column="16" selection-start-line="89" selection-start-column="16" selection-end-line="89" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery.growl.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/jquery.growl.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/tempusdominus-bootstrap-4.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-36100">
+          <folding>
+            <element signature="e#6#12#1" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="315">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web-filesys-s3.js">
+    <entry file="file://$PROJECT_DIR$/js/dash.all.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" selection-start-line="11" selection-end-line="12" />
+        <state relative-caret-position="296">
+          <caret line="1" column="584017" selection-start-line="1" selection-start-column="584017" selection-end-line="1" selection-end-column="584017" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bbutils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="4" selection-start-column="4" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="148" column="69" selection-start-line="148" selection-start-column="64" selection-end-line="148" selection-end-column="69" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

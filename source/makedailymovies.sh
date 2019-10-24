@@ -33,7 +33,7 @@ cam=$(basename "$1")
 
 # Use relative where possible
 # After a cd, use $ROOTDIR/$dailyphotos
-cd $1
+cd "$1" || exit 1
 ROOTDIR=$(pwd)
 dailyphotos=daily-photos
 dailyvideos=daily-videos
@@ -112,4 +112,4 @@ done
 
 echo Syncing changes
 # push changes to daily-movies (files, overwrites daily movies from early in the day)
-aws s3 sync $ROOTDIR/$dailyvideos s3://tmv.brettbeeson.com.au/"$cam"/daily-videos
+aws s3 sync "$ROOTDIR"/"$dailyvideos" s3://tmv.brettbeeson.com.au/"$cam"/daily-videos

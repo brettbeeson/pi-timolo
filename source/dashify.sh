@@ -7,9 +7,9 @@
 # writes the DASH directory to stdout
 
 
-n_encodings=1
-scales=("640x360")
-crf=(28)
+#n_encodings=1
+#scales=("640x360")
+#crf=(28)
 
 n_encodings=3
 scales=("640x360" "1280x720" "1920x1080")
