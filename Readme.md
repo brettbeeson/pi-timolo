@@ -10,3 +10,5 @@ Modifications:
 - Scripts use ffmpeg and [tlmm](https://github.com/brettbeeson/tlmm) and MP4Box
 - web-server component to *stream* videos and images for multiple cameras 
 - web-server is all client-side. Uses AWS S3 to get images/videos. Can be statically served.
+
+See an example [./example.jpg]
