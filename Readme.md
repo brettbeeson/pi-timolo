@@ -11,4 +11,4 @@ Modifications:
 - web-server component to *stream* videos and images for multiple cameras 
 - web-server is all client-side. Uses AWS S3 to get images/videos. Can be statically served.
 
-See an example (./example.jpg)
+![See an example](https://github.com/brettbeeson/pi-timolo/example.jpg "Example")
