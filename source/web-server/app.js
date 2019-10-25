@@ -58,7 +58,7 @@ $.blockUI.defaults.ignoreIfBlocked = true;
  ***********************************************************************************
  */
 $(document).ajaxError(function (event, request, settings) {
-    $.growl.warning({message: "Server error: " + settings.url + "," + request.status + "," + request.statusText});
+    $.jGrowl({message: "Server error: " + settings.url + "," + request.status + "," + request.statusText});
 });
 
 function disable_button(button) {
@@ -202,7 +202,7 @@ function show_file_in_previewer(resource) {
         hide_element($("#image-shower-div"));
         showVideoInPreviewElement(resource);
     } else {
-        $.growl.warning({message: "Unknown file type:" + resource});
+        $.jGrowl({message: "Unknown file type:" + resource});
         unblockInterface();
         return false;
     }
@@ -351,7 +351,7 @@ function showDashVideoInPreviewElement(filepath) {
     });
     player.error(() => {
         unblockInterface();
-        $.growl.warning({message: "Couldn't play video. Error: " + player.error()});
+        $.jGrowl({message: "Couldn't play video. Error: " + player.error()});
     });
     unhide_element("#video-player-div");
     setVideoCaption(filepath);
@@ -377,7 +377,7 @@ function showVideoInPreviewElement(filepath) {
     });
     player.error(() => {
         unblockInterface();
-        $.growl.warning({message: "Couldn't play video. Error: " + player.error()});
+        $.jGrowl({message: "Couldn't play video. Error: " + player.error()});
     });
     unhide_element("#video-player-div");
     setVideoCaption(filepath);
@@ -399,7 +399,7 @@ function show_rel_video(video, days) {
         // If not available, show a blank of the previous size
         $(video).height(h);
         $(video).width(w);
-        $.growl.warning({message: "Couldn't find a video for " + new_video_basename});
+        $.jGrowl({message: "Couldn't find a video for " + new_video_basename});
     } else {
         // Reset responsive image
         $(video).css('height', 'auto');
@@ -421,7 +421,7 @@ function show_rel_image(image, numberof, units) {
     } else {
         image.height(h);
         image.width(w);
-        $.growl.warning({message: "Couldn't find an image for " + new_image_basename});
+        $.jGrowl({message: "Couldn't find an image for " + new_image_basename});
     }
 }
 
@@ -441,7 +441,7 @@ function show_latest_image() {
                 return false;
             }
         }
-        $.growl.warning({message: "No images available"});
+        $.jGrowl({message: "No images available"});
         // unblockInterface(); by <img> element's event 'error'
     })();
 }
@@ -512,7 +512,7 @@ jQuery(document).ready(function () {
                 showImageInPreviewElement(photos_that_hour[0]);
             } else {
                 disable_button($(e.target));
-                $.growl.warning({message: "No photos found"});
+                $.jGrowl({message: "No photos found"});
                 unblockInterface();
             }
         })();
@@ -549,7 +549,7 @@ jQuery(document).ready(function () {
                 // only mp4 available
                 showVideoInPreviewElement(videos_mp4[videos_mp4.length - 1])
             } else {
-                $.growl.warning({message: "No video found. Soz."});
+                $.jGrowl({message: "No video found. Soz."});
                 unblockInterface();
             }
         })();
@@ -604,7 +604,7 @@ jQuery(document).ready(function () {
                 let newRelativePathQuery = window.location.pathname + '?' + searchParams.toString();
                 history.pushState(null, '', newRelativePathQuery);
             } else {
-                $.growl.warning({message: "URLSearchParams not available. Use a modern browser!"});
+                $.jGrowl({message: "URLSearchParams not available. Use a modern browser!"});
             }
             base_dir = new_base.slashEnd(true); // global
             cd(base_dir);
@@ -662,7 +662,7 @@ jQuery(document).ready(function () {
             if (fs.fileExists(image_filepath)) {
                 show_file_in_previewer(image_filepath);
             } else {
-                $.growl.warning({message: "No photo for " + selected_photo_datetime.format('LL HH:mm')});
+                $.jGrowl({message: "No photo for " + selected_photo_datetime.format('LL HH:mm')});
             }
 
         }
@@ -682,6 +682,6 @@ jQuery(document).ready(function () {
         enabled_dates_for_date_pickers();
     } else {
         $("#camera-selector").effect("shake", "distance");
-        $.growl({duration: 10000, title: "Getting Started", message: "Please enter a camera's name to view it. You need to know the name. It's case insensitive."});
+        $.jGrowl({duration: 10000, title: "Getting Started", message: "Please enter a camera's name to view it. You need to know the name. It's case insensitive."});
     }
 });
