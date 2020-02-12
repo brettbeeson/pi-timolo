@@ -76,7 +76,8 @@ fi
 
 echo $(date --iso-8601=minutes): Starting $0 
 echo Pulling latest daily-videos. Usually we have them locally, so this shouldnt run except on first/restart/etc.
-aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
+echo --delete to remove expired videos
+aws s3 sync --delete s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
 
 # Only run if there are daily videos newer the long-video
 # The directory's date changes *not* on files' dates changes,

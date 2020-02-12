@@ -40,27 +40,27 @@ dailyvideos=daily-videos
 new_videos=0
 
 if [ ! -d "$dailyvideos" ]; then
-	echo "$dailyvideos: No such directory"
-	exit 1
+	echo "$dailyvideos: No such directory. Making it."
+	mkdir "$dailyvideos"
 fi
 if [ ! -d "$dailyphotos" ]; then
-	echo "$dailyphotos: No such directory"
-	exit 1
+	echo "$dailyphotos: No such directory. Making it."
+	mkdir "$dailyphotos"
 fi
 
 tmpdir=$(mktemp -d)
-echo $(date --iso-8601=minutes): Starting makedailymovies.sh
+echo $(date --iso-8601=minutes): Starting makedailymovies.sh | systemd-cat -t tmv
 echo Tmp: $tmpdir
 echo Root: $ROOTDIR
 echo Photos: $dailyphotos
 echo Videos: $dailyvideos
 echo Cam: $cam
 
-echo Pulling latest photos
+echo Pulling latest photos. Delete to remove expired-on-S3 files
 # --show-only-errors
-aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-photos daily-photos
+aws s3 sync --delete s3://tmv.brettbeeson.com.au/"$cam"/daily-photos daily-photos
 echo Pulling latest daily-videos. This is so when we upload with --delete, we can remove the right ones
-aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
+aws s3 sync --delete s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
 
 # For each folder of a day's photos...
 for d in "$dailyphotos"/*/; do
@@ -78,7 +78,7 @@ for d in "$dailyphotos"/*/; do
 	nvideos=$(ls -l $ROOTDIR/$dailyvideos/$day*.mp4 2>/dev/null | grep -v ^d | grep -v ^t | wc -l)
 	echo "$day": Found $nfiles images \(previously $lastnfiles\) and $nvideos videos.
 	# Only run if more files available, or no videos
-	if [ $nfiles -gt $lastnfiles -o $nvideos -eq 0 ]; then
+	if [ $nfiles -gt 0 ] && [ $nfiles -gt $lastnfiles -o $nvideos -eq 0 ]; then
 		echo $day: Making a video
 		# Move away old existing videos and dash dirs for that day (might have different hour-suffixs
 		mv $ROOTDIR/$dailyvideos/$day*.mp4 $tmpdir/ 2>/dev/null
@@ -100,9 +100,10 @@ for d in "$dailyphotos"/*/; do
 			let new_videos++
 		else
 			echo $day: Make video failed: code $madevideo. Check $(pwd)/tlmm.log
+			echo $0: $day: Make video failed: code $madevideo. Check $(pwd)/tlmm.log | systemd-cat -t tmv
 			# Move them back
-			mv "$tmpdir"/"$day".mp4 "$ROOTDIR"/$dailyvideos/
-			mv "$tmpdir"/"$day"* "$ROOTDIR"/$dailyvideos/
+			mv "$tmpdir"/"$day".mp4 "$ROOTDIR"/$dailyvideos/ > /dev/null 2>&1
+			mv "$tmpdir"/"$day"* "$ROOTDIR"/$dailyvideos/ > /dev/null 2>&1
 			
 		fi
 	fi
