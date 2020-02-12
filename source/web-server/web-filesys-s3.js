@@ -7,9 +7,8 @@ import  { baseName, splitPath, bytesToHumanReadable } from "./bbutils.js";
 export class WebFileSysS3 {
 
     constructor(_BUCKET_URL) {
+        // Axiom: ends in slash
         this.BUCKET_URL = _BUCKET_URL.slashEnd(true);
-        this.S3BL_IGNORE_PATH = false;
-        this.S3B_ROOT_DIR = '';
         this.IMG_EXTENSIONS = ['bmp', 'gif', 'jpg', 'jpeg', 'jpe', 'png'];
         this.VIDEO_EXTENSIONS = ['mp4', 'mov', 'avi'];
         this.MISC_ELEMENTS = [];
@@ -110,7 +109,9 @@ export class WebFileSysS3 {
                 // s3 gives back foo/bar.txt
                 // we need just bar.txt
                 let p = splitPath(e.Key);
-                dir_entries.push(p['filename'] + p['extension']);
+                if ((p['filename'] + p['extension']).length>0) {
+                    dir_entries.push(p['filename'] + p['extension']);
+                }
             });
 
             info.directories.forEach(function (e) {
@@ -128,7 +129,7 @@ export class WebFileSysS3 {
      * @returns {boolean}
      */
     fileOrDirExists(itemname) {
-        itemname = itemname.slashEnd(false);
+        itemname = itemname.slashStart(false).slashEnd(false);
         let exists = false;
         let s3_rest_url;
         s3_rest_url = this.createS3QueryUrl(itemname);
@@ -153,7 +154,7 @@ export class WebFileSysS3 {
 
 
     fileExists(filename) {
-        filename = filename.slashEnd(false);
+        filename = filename.slashStart(false);  // s3 cannot have "/" at start
         let exists = false;
         let s3_rest_url;
         s3_rest_url = this.createS3QueryUrl(filename);
@@ -243,7 +244,7 @@ export class WebFileSysS3 {
      */
     isDashDir(path) {
         if (!this.isDir(path)) {
-            return false;
+            //return false;
         }
         let dir_files = this.ls(path);
         let mpd_entries = dir_files.filter( (d)=> {
@@ -261,7 +262,7 @@ export class WebFileSysS3 {
      * @param resource file or directory relative to webroot
      */
     urlTo(resource) {
-        return this.BUCKET_URL + resource;
+        return this.BUCKET_URL + resource.slashStart(false);
     }
 }
 

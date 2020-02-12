@@ -26,6 +26,7 @@ debug = True              # default= False True = debug mode returns pixel avera
 drawSpinnyOverlay = True
 drawSpinnyGlyphDiameter = 50
 showTextLeft = True
+fileByDay = True	   # default= False File images under daily-photos/YYYY-MM-DD
 
 # Image Settings
 # --------------
@@ -34,7 +35,7 @@ imageNamePrefix = 'pi-'  # default= 'cam1-' for all image file names. Eg garage-
 imageWidth = 1280          # default= 1024 Full Size Image Width in px
 imageHeight = 720          # default= 768  Full Size Image Height in px
 imageFormat = ".jpg"       # default= ".jpg"  image Formats .jpeg .png .gif .bmp
-imageJpegQuality = 95      # default= 95 jpg Encoder Quality Values 1(low)-100(high min compression) 0=85
+imageJpegQuality = 75      # default= 95 jpg Encoder Quality Values 1(low)-100(high min compression) 0=85
 imageRotation = 0         # Default= 0  Rotate image. Valid values: 0, 90, 180, 270
 imageVFlip = False  # default= False True Flips image Vertically
 imageHFlip = False  # default= False True Flips image Horizontally
@@ -109,8 +110,8 @@ createLockFile = False      # default= False True= Create pi-timolo.sync file wh
 # Time Lapse Settings
 # -------------------
 timelapseOn = True          # default= False True=Turn timelapse On, False=Off
-timelapseDir = "media/timelapse" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
-timelapsePrefix = "tl-"     # default= "tl-" Prefix for All timelapse images with this prefix
+timelapseDir = "/media/usb" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
+timelapsePrefix = ""     # default= "tl-" Prefix for All timelapse images with this prefix
 timelapseStartAt = ""       # default= "" Off or Specify date/time to Start Sequence Eg "01-dec-2019 08:00:00" or "20:00:00"
 timelapseEndAt = ""       # default= "" Off or Specify time to stop eg "08:00:00" or "20:00:00"
 exposureMax = 0             # default = 0

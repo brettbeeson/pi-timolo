@@ -14,7 +14,7 @@
 progpath="/home/pi/pi-timolo"
 progname="pi-timolo.py"
 proglog="verbose.log"
-progsleep=10
+progsleep=1
 
 echo "$0 ver 1.1 written by Claude Pageau"
 echo "-----------------------------------------------"

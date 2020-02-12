@@ -15,9 +15,9 @@ echo "$progName $ver  written by Claude Pageau"
 
 lockFileCheck=false      # true= Checks for pi-timolo.sync file. false = No Check (case sensitive)
 rcloneName="s3tmv"     # Name of Remote Storage Service
-syncRoot="/home/pi/pi-timolo"   # Root Folder to Start
-localDir="media/timelapse"         # Source Folder on Local
-remoteDir="tmv.brettbeeson.com.au/picam/photos"        # Destination Folder on Remote
+syncRoot="/home/pi/pi-timolo/media"   # Root Folder to Start
+localDir="daily-photos"         # Source Folder on Local
+remoteDir="tmv.brettbeeson.com.au/picam/daily-photos"        # Destination Folder on Remote
 rcloneParam="move -L --s3-acl=public-read"    # -L follow symlinks. other options  Eg sync, copy, move 
                          # IMPORTANT: sync will make remoteDir identical to localDir
                          # so remoteDir Files that do not exist on localDir will be Deleted.
