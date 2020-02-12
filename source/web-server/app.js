@@ -80,8 +80,10 @@ function reset_elements(element) {
 }
 
 /**
+ * Get objects with prefix 
  * @todo Could cache
- * In prefix (not recursive)
+ * @todo Add a filter to get only movies, etc. Not available on API
+ * so implement here, using same "exclude/include" syntax as "aws cp"
  * @param bucket
  * @param prefix
  * @param recursive
@@ -480,6 +482,7 @@ jQuery(document).ready(function () {
                 if (videos_dash.length > 0 && videos_mp4.length > 0) {
                     // choose the latest. Looks at start time - probably ok.
                     // eg.  "2019-10-16T04_to_2019-10-16T13" >= "2019-10-16T04_to_2019-10-16T12"
+			// \todo THIS BREAKS IF NON VIDEOS FILES ARE IN THE FOLDER
                     if (baseName(videos_dash[videos_dash.length - 1].slashEnd(false)) >=
                         baseName(videos_mp4[videos_mp4.length - 1])) {
                         showDashVideoInPreviewElement(videos_dash[videos_dash.length - 1]);

@@ -5,6 +5,8 @@
 # $1 mp4 file
 # $2 directory to made dash directory in
 # writes the DASH directory to stdout
+# @todo: seems to miss the LAST segments, so a player with be waiting on 
+# a non-existant file
 
 
 #n_encodings=1
