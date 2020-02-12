@@ -15,7 +15,6 @@
 # |---- last-weeks					<-- output
 
 run_dashify=true
-set -x
 
 # Concat, dashify and quick-link
 # $1 : from: a past time (eg "1 week ago")

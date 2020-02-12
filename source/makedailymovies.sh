@@ -40,12 +40,10 @@ dailyvideos=daily-videos
 new_videos=0
 
 if [ ! -d "$dailyvideos" ]; then
-	echo "$dailyvideos: No such directory"
-	exit 1
+	mkdir "$dailyvideos" || exit 1
 fi
 if [ ! -d "$dailyphotos" ]; then
-	echo "$dailyphotos: No such directory"
-	exit 1
+	mkdir "$dailyphotos" || exit 1
 fi
 
 tmpdir=$(mktemp -d)
@@ -76,9 +74,9 @@ for d in "$dailyphotos"/*/; do
 		lastnfiles=0
 	fi
 	nvideos=$(ls -l $ROOTDIR/$dailyvideos/$day*.mp4 2>/dev/null | grep -v ^d | grep -v ^t | wc -l)
-	echo "$day": Found $nfiles images \(previously $lastnfiles\) and $nvideos videos.
 	# Only run if more files available, or no videos
-	if [ $nfiles -gt $lastnfiles -o $nvideos -eq 0 ]; then
+	if [ $nfiles -gt 0 ] && [ $nfiles -gt $lastnfiles -o $nvideos -eq 0 ]; then
+		echo "$day": Found $nfiles images \(previously $lastnfiles\) and $nvideos videos.
 		echo $day: Making a video
 		# Move away old existing videos and dash dirs for that day (might have different hour-suffixs
 		mv $ROOTDIR/$dailyvideos/$day*.mp4 $tmpdir/ 2>/dev/null
@@ -101,8 +99,8 @@ for d in "$dailyphotos"/*/; do
 		else
 			echo $day: Make video failed: code $madevideo. Check $(pwd)/tlmm.log
 			# Move them back
-			mv "$tmpdir"/"$day".mp4 "$ROOTDIR"/$dailyvideos/
-			mv "$tmpdir"/"$day"* "$ROOTDIR"/$dailyvideos/
+			mv "$tmpdir"/"$day".mp4 "$ROOTDIR"/$dailyvideos/ 2>/dev/null
+			mv "$tmpdir"/"$day"* "$ROOTDIR"/$dailyvideos/ 2>/dev/null
 			
 		fi
 	fi
