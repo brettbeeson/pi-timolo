@@ -1,101 +1,57 @@
 #!/bin/bash
-ver="10.00"
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"  # get cur dir of this script
+#
+# $1: cam-name (default = hostname)
+
 progName=$(basename -- "$0")
-cd $DIR
-echo "$progName $ver  written by Claude Pageau"
-: '
- If lockCheckFile=True then script checks pi-timolo.sync file exists
- Otherwise no sync is attempted.  This can be useful for
- Low Bandwidth connections with low frequency of motion tracking events
-'
 
-#  Customize rclone sync variables Below
+if [ $# -eq 0 ]; then
+  tmv_cam=$(hostname)
+elif [ $# -eq 1 ]; then
+  tmv_cam=$1
+else
+    echo Wrong or no arguments supplied 1>&2
+    exit 2
+fi
+
 # ---------------------------------------
-
-lockFileCheck=false      # true= Checks for pi-timolo.sync file. false = No Check (case sensitive)
 rcloneName="s3tmv"     # Name of Remote Storage Service
-syncRoot="/home/pi/pi-timolo/media"   # Root Folder to Start
-localDir="daily-photos"         # Source Folder on Local
-remoteDir="tmv.brettbeeson.com.au/picam/daily-photos"        # Destination Folder on Remote
+syncRoot="/home/pi/tmv/daily-photos"   # Root Folder to Start
+remoteDir="tmv.brettbeeson.com.au/$tmv_cam/daily-photos"        # Destination Folder on Remote
 rcloneParam="move -L --s3-acl=public-read"    # -L follow symlinks. other options  Eg sync, copy, move 
-                         # IMPORTANT: sync will make remoteDir identical to localDir
-                         # so remoteDir Files that do not exist on localDir will be Deleted.
 # ---------------------------------------
 
+echo ----------- SETTINGS -------------
+echo tmv_cam 	     : $tmv_cam
+echo lockFileCheck : $lockFileCheck
+echo rcloneName    : $rcloneName
+echo syncRoot      : $syncRoot
 
-# Display Users Settings
-echo "----------- SETTINGS -------------
-
-lockFileCheck : $lockFileCheck
-rcloneName    : $rcloneName
-syncRoot      : $syncRoot
-localDir      : $localDir
-remoteDir     : $remoteDir
-rcloneParam   : $rcloneParam   (Options are sync, copy or move)
-
----------------------------------"
-
-lockFilePath="/home/pi/pi-timolo/pi-timolo.sync"
+echo remoteDir     : $remoteDir
+echo rcloneParam   : $rcloneParam   # sync|copy|move
+echo ---------------------------------
 
 cd $syncRoot   # Change to local rclone root folder
 if pidof -o %PPID -x "$progName"; then
-    echo "WARN  - $progName Already Running. Only One Allowed."
+    echo "WARN  - $progName Already Running. Only One Allowed." 1>&2
 else
     if [ -f /usr/bin/rclone ]; then    #  Check if rclone installed
         rclone version   # Display rclone version
-        if [ ! -d "$localDir" ] ; then   # Check if Local sync Folder Exists
-           echo "---------------------------------------------------"
-           echo "ERROR : localDir=$localDir Does Not Exist."
-           echo "        Please Investigate Bye ..."
+        if [ ! -d "$syncRoot" ] ; then   # Check if Local sync Folder Exists
+           echo ERROR : syncRoot="syncRoot" Does Not Exist. 1>&2
            exit 1
         fi
         /usr/bin/rclone listremotes | grep "$rcloneName"  # Check if remote storage name exists
         if [ $? == 0 ]; then    # Check if listremotes found anything
-            if $lockFileCheck ; then
-                if [ -f "$lockFilePath" ] ; then  # Check if sync lock file exists
-                    echo "INFO  : Found Lock File $lockFilePath"
-                    echo "        rclone $rcloneParam is Required."
-                else
-                    echo "INFO  : Lock File Not Found: $lockFilePath"
-                    echo "        rclone $rcloneParam is Not Required."
-                    echo "Exiting $progName ver $ver"
-                    exit 0
-                fi
-            fi
-            echo "INFO  : /usr/bin/rclone $rcloneParam -v $localDir $rcloneName:$remoteDir"
-            echo "        One Moment Please ..."
-            /usr/bin/rclone $rcloneParam -v $localDir $rcloneName:$remoteDir
+            echo "INFO  : /usr/bin/rclone $rcloneParam -v $syncRoot $rcloneName:$remoteDir"
+            /usr/bin/rclone $rcloneParam $syncRoot $rcloneName:$remoteDir
             if [ ! $? -eq 0 ]; then
-                echo "---------------------------------------------------"
-                echo "ERROR : rclone $rcloneParam Failed."
-                echo "        Review rclone %rcloneParam Output for Possible Cause."
-            else
-                echo "INFO  : rclone $rcloneParam Successful ..."
-                if $lockFileCheck ; then
-                    if [ -f "$lockFilePath" ] ; then
-                        echo "INFO  : Delete File $lockFilePath"
-                        rm -f $lockFilePath
-                    fi
-                fi
+                echo ERROR : rclone $rcloneParam Failed 1>&2
             fi
         else
-            echo "---------------------------------------------------"
-            echo "ERROR : rcloneName=$rcloneName Does not Exist"
-            echo "INFO  : List Remote Storage Names that are Setup."
-            echo "rclone listremotes"
-            echo "-------------------"
+            echo ERROR : rcloneName=$rcloneName Does not Exist. Check rclone listremotes 2>&1
             rclone listremotes
-            echo "--------------------"
-            echo "INFO  : If listremotes Listing is Empty, Read pi-timolo Wiki"
-            echo "        How to Setup a Remote Storage Name."
         fi
     else
-        echo "ERROR : /usr/bin/rclone Not Installed."
-        echo "        You Must Install and Configure rclone"
-        echo "        See pi-timolo Wiki for Details"
+        echo "ERROR : /usr/bin/rclone Not Installed." 2>&1
     fi
 fi
-echo "---------------------------------------------------"
-echo "Exiting $progName ver $ver
-Bye ..."

@@ -1079,7 +1079,7 @@ def drawSpinny(filename,dt):
     w = drawSpinnyGlyphDiameter
     # 1px off corner
     bounding_box = [(1, img.height - w), (w, img.height - 1)]
-    # Angles are measured from 3 o’clock, increasing clockwise.
+    # Angles are measured from 3 oclock, increasing clockwise.
     draw.pieslice(bounding_box, dt.minute * (360/60) - 90 ,  dt.minute * (360/60) - 90 , fill=None, outline=None)
     #draw.pieslice(bounding_box, dt.hour * (360/12), dt.minute * (360/12), fill=None, outline=None)
     draw.arc(bounding_box, 0, 360)
