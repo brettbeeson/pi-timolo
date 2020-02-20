@@ -44,6 +44,7 @@ def get_data2(f):
         if r['error'] == 'NO_ERROR':
             return r['data']
         else:
+            print(".",newline='')
             sleep(.1)
     raise RuntimeError("pijuice failed with code: {}".format(f()['error']))
 
@@ -95,7 +96,11 @@ try:
             'fields': {
                 'charge_level': float(get_data2(pij.status.GetChargeLevel)),
                 'battery_voltage': float(get_data2(pij.status.GetBatteryVoltage)),
+                'battery_current': float(get_data2(pij.status.GetBatteryCurrent)),
+                'battery_power' : float(get_data2(pij.status.GetBatteryCurrent) * get_data2(pij.status.GetBatteryVoltage)/1000),
                 'io_voltage': float(get_data2(pij.status.GetIoVoltage)),
+                'io_current': float(get_data2(pij.status.GetIoCurrent)),
+                'io_power': float(get_data2(pij.status.GetIoCurrent) * get_data2(pij.status.GetIoVoltage )/ 1000),
                 'watch_dog_minutes': float(get_data2(pij.power.GetWatchdog))
             }
         }]
