@@ -41,9 +41,9 @@ showDateOnImage = True        # default= True False=Do Not display date/time tex
 # -------------------
 timelapseDir = "/home/pi/tmv/" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
 timelapsePrefix = ""       # default= "long-" Prefix for All timelapse images with this prefix
-timelapseStartAt = "05:00:00"         # default= "" Off or Specify date/time to Start Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
-timelapseEndAt = "19:00:00"         # default= "" Off or Specify date/time to End Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
-timelapseTimer = 60         # default= 180 (3 min) Seconds between timelapse images
+timelapseStartAt = "00:00:00"         # default= "" Off or Specify date/time to Start Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
+timelapseEndAt = "23:59:00"         # default= "" Off or Specify date/time to End Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
+timelapseTimer = 10         # default= 180 (3 min) Seconds between timelapse images
 timelapseNumOn = False         # default= True filenames Sequenced by Number False=filenames by date/time
 timelapseNumRecycle = False   # default= True Restart Numbering at NumStart  False= Surpress Timelapse at NumMax
 timelapseNumStart = 100000    # default= 1000 Start of timelapse number sequence

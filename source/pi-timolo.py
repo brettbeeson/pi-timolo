@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 """
 pi-timolo - Raspberry Pi Long Duration Timelapse, Motion Tracking,
 with Low Light Capability
@@ -10,7 +10,7 @@ from __future__ import print_function
 
 progVer = "ver 11.52"  # Requires Latest 11.2 release of config.py
 __version__ = progVer  # May test for version number at a future time
-
+import RPi.GPIO as GPIO #
 import os
 import sys
 warn_on = False  # Add short delay to review warning messages
@@ -39,7 +39,7 @@ import time
 import math
 from threading import Thread
 from fractions import Fraction
-import numpy as np
+#import numpy as np # only for special things
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
@@ -243,16 +243,19 @@ for key, val in default_settings.items():
 
 # Setup Logging now that variables are imported from config.py/plugin
 if logDataToFile:
+    print("Logging to {}".format(logFilePath))
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)-8s %(funcName)-10s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S',
                         filename=logFilePath,
                         filemode='w')
 elif verbose:
+    print("Logging debug to stderr/out")
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s %(levelname)-8s %(funcName)-10s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
 else:
+    print("Logging stderr/out")
     logging.basicConfig(level=logging.CRITICAL,
                         format='%(asctime)s %(levelname)-8s %(funcName)-10s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
@@ -276,8 +279,8 @@ else:
 # Give some time to read any warnings
 if warn_on and verbose:
     print('')
-    #print('Please Review Warnings  Wait 10 sec ...')
-    # time.sleep(10)
+    print('Please Review Warnings ')
+    time.sleep(1)
 
 
 try:
@@ -299,8 +302,11 @@ except ImportError:
     sys.exit(1)
 
 try:
+    print("importing picamera module")
+    import picamera
     from picamera import PiCamera
 except ImportError:
+    print("Problem  picamera module")
     logging.error("Problem importing picamera module")
     logging.error("Try command below to import module")
     if sys.version_info > (2, 9):
@@ -309,8 +315,10 @@ except ImportError:
         logging.error("sudo apt-get install python-picamera")
     logging.error("Exiting %s Due to Error", progName)
     sys.exit(1)
-from picamera.array import PiRGBArray
-import picamera.array
+
+print("  picamera module imported")
+#from picamera.array import PiRGBArray # only for stream
+#import picamera.array# only for stream
 
 # Check that pi camera module is installed and enabled
 camResult = subprocess.check_output("vcgencmd get_camera", shell=True)
@@ -1394,14 +1402,20 @@ def takeDayImageOptimsedForTimelapse(filename,cam_sleep_time):
                           exposureMax,camera.shutter_speed)
             )
 
+        Thread(target=camera_led_flash()).start()
+
 
         if imagePreview:
             camera.start_preview()
         if imageFormat == ".jpg":  # Set quality if image is jpg
             camera.capture(filename, quality=imageJpegQuality)
         else:
+
             camera.capture(filename)
+
+
         camera.close()
+
 
     #logging.info("camSleepSec=%.2f awb=%s Size=%ix%i ",
 #                 cam_sleep_time, awbMode, imageWidth, imageHeight)
@@ -1409,7 +1423,23 @@ def takeDayImageOptimsedForTimelapse(filename,cam_sleep_time):
     if not showDateOnImage:
         logging.info("FilePath  %s", filename)
 
+def camera_led_flash():
+    camera_led(True)
+    time.sleep(1/5000)
+    camera_led(False)
 
+def camera_led(state):
+    GPIO.setmode(GPIO.BCM)          # Use GPIO numbering
+    # Set GPIO for camera LED
+    # Use 5 for Model A/B and 32 for Model B+, 40 for zero
+    CAMLED = 40
+    if not camera_led.setup:
+        GPIO.setwarnings(False)
+        GPIO.setup(CAMLED, GPIO.OUT, initial=False)
+        GPIO.setwarnings(True)
+        camera_led.setup = False
+    GPIO.output(CAMLED, state)  # On
+camera_led.setup=False
 # ------------------------------------------------------------------------------
 def getShut(pxAve):
     """
@@ -1847,11 +1877,11 @@ def timolo():
                      timelapseOn)
         stopTimeLapse = True
     logging.info("Start PiVideoStream ....")
-    vs = PiVideoStream().start()
-    vs.camera.rotation = imageRotation
-    vs.camera.hflip = imageHFlip
-    vs.camera.vflip = imageVFlip
-    time.sleep(1)
+    #vs = PiVideoStream().start()
+    #vs.camera.rotation = imageRotation
+    #vs.camera.hflip = imageHFlip
+    #vs.camera.vflip = imageVFlip
+    #time.sleep(1)
 
     if motionTrackOn:
         mostr = "Motion Tracking"
@@ -2044,15 +2074,15 @@ def timolo():
                         deleteOldFiles(timelapseMaxFiles, timelapseDir,
                                        imagePrefix)
                     dotCount = showDots(motionDotsMax)
-                    logging.info("Restart PiVideoStream ....")
-                    vs = PiVideoStream().start()
-                    vs.camera.rotation = imageRotation
-                    vs.camera.hflip = imageHFlip
-                    vs.camera.vflip = imageVFlip
-                    time.sleep(1)
-                    tlPath = subDirChecks(timelapseSubDirMaxHours,
-                                          timelapseSubDirMaxFiles,
-                                          timelapseDir, timelapsePrefix)
+                    #logging.info("Restart PiVideoStream ....")
+                    #vs = PiVideoStream().start()
+                    #vs.camera.rotation = imageRotation
+                    #vs.camera.hflip = imageHFlip
+                    #vs.camera.vflip = imageVFlip
+                    #time.sleep(1)
+                    #tlPath = subDirChecks(timelapseSubDirMaxHours,
+                    #                      timelapseSubDirMaxFiles,
+                    #                      timelapseDir, timelapsePrefix)
             if motionTrackOn and checkSchedStart(startMO) and takeMotion and (not stopMotion):
                 # IMPORTANT - Night motion tracking may not work very well
                 #             due to long exposure times and low light
@@ -2428,11 +2458,11 @@ if __name__ == '__main__':
     """ Initialization prior to launching appropriate pi-timolo options """
     logging.info("Testing if Pi Camera is in Use")
     # Test if the pi camera is already in use
-    ts = PiVideoStream().start()
-    time.sleep(1)
-    ts.stop()
-    time.sleep(motionStreamStopSec)
-    logging.info("Pi Camera is Available.")
+    #ts = PiVideoStream().start()
+    #time.sleep(1)
+    #ts.stop()
+    #time.sleep(motionStreamStopSec)
+    #logging.info("Pi Camera is Available.")
     if pluginEnable:
         logging.info("Start pi-timolo per %s and plugins/%s.py Settings",
                      configFilePath, pluginName)
@@ -2441,6 +2471,7 @@ if __name__ == '__main__':
 
     if not verbose:
         print("NOTICE: Logging Disabled per variable verbose=False  ctrl-c Exits")
+
 
     try:
         if videoRepeatOn:

@@ -54,10 +54,10 @@ echo Photos: $dailyphotos
 echo Videos: $dailyvideos
 echo Cam: $cam
 
-echo Pulling latest photos
+echo Pulling latest photos. Using --delete to remove stale local photos
 # --show-only-errors
-aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-photos daily-photos
-echo Pulling latest daily-videos. This is so when we upload with --delete, we can remove the right ones
+aws s3 sync --delete s3://tmv.brettbeeson.com.au/"$cam"/daily-photos daily-photos
+echo Pulling latest daily-videos. This is so when we upload with --delete, we can remove the right ones.
 aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
 
 # For each folder of a day's photos...
@@ -90,6 +90,7 @@ for d in "$dailyphotos"/*/; do
 			rm $tmpdir/$day* 2>/dev/null || true
 			# Rename from 2019-01-01T15_to_2019-01-01T19.mp4 to 2019-01-01.mp4
 			mv "$video_made" "$ROOTDIR"/$dailyvideos/"$day".mp4
+			rm "$ROOTDIR"/$dailyvideos/"$day"T??_to_"$day"T??.mp4
 			video_made="$ROOTDIR"/$dailyvideos/"$day".mp4
 			if $run_dashify; then
 				echo Dashify video: $video_made

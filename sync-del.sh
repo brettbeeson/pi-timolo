@@ -1,3 +1,3 @@
 while inotifywait -r -e modify,create,delete,move .; do
-    rsync --delete -qavz . pi@picam2.local:pi-timolo-root
+    rsync --delete -qavz . $1:pi-timolo-root
 done
