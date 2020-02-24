@@ -1,6 +1,6 @@
 # m h  dom mon dow   command
 # pijuice: ensure wakeup alarm still enabled on boot
-@reboot /usr/bin/python3 /home/pi/pi-timolo/pijuice-wakeup.py enable
+#@reboot /usr/bin/python3 /home/pi/pi-timolo/pijuice-wakeup.py enable
 
 # Camera - ignore if running, restart oterwise
 */5 *  *   *   *     /home/pi/pi-timolo/pi-timolo.sh start 	>> /home/pi/pi-timolo.cron.log 			    2>&1 1>/dev/null
