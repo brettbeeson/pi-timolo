@@ -1,7 +1,7 @@
 """
 pluginName = bbtl
 
-Senario Long Duration Timelapse Project
+Scenario Long Duration Timelapse Project
 ---------------------------------------
 Suitable for a multi week/month long duration timelapse day and night.
 
@@ -31,21 +31,19 @@ showTextLeft = True # default = False If False, show in centre
 
 # Customize settings below to suit your project needs
 # ---------------------------------------------------
-imageNamePrefix = 'alex-'     # default= 'long-' for all image file names. Eg garage-
-#imageWidth = 1920             # default= 1920 Full Size Image Width in px
-#imageHeight = 1080            # default= 1080  Full Size Image Height in px
-imageWidth = 3280  		# default= 1920 Full Size Image Width in px
-imageHeight = 2464		# default= 1080  Full Size Image Height in px
+imageNamePrefix = ''     # default= 'long-' for all image file names. Eg garage-
+imageWidth = 1920             # default= 1920 Full Size Image Width in px
+imageHeight = 1080            # default= 1080  Full Size Image Height in px
 imageJpegQuality = 85          # default = 95  Valid jpg encoder quality values 1 to 100 (high)
 showDateOnImage = True        # default= True False=Do Not display date/time text on images
 
 # Time Lapse Settings
 # -------------------
-timelapseDir = "media/timelapse" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
-timelapsePrefix = "tl-"       # default= "long-" Prefix for All timelapse images with this prefix
-timelapseStartAt = "05:00:00"         # default= "" Off or Specify date/time to Start Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
-timelapseEndAt = "19:00:00"         # default= "" Off or Specify date/time to End Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
-timelapseTimer = 30         # default= 180 (3 min) Seconds between timelapse images
+timelapseDir = "/home/pi/tmv/" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
+timelapsePrefix = ""       # default= "long-" Prefix for All timelapse images with this prefix
+timelapseStartAt = "00:00:00"         # default= "" Off or Specify date/time to Start Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
+timelapseEndAt = "23:59:00"         # default= "" Off or Specify date/time to End Sequence Eg "01-jan-20018 08:00:00" or "20:00:00"
+timelapseTimer = 10         # default= 180 (3 min) Seconds between timelapse images
 timelapseNumOn = False         # default= True filenames Sequenced by Number False=filenames by date/time
 timelapseNumRecycle = False   # default= True Restart Numbering at NumStart  False= Surpress Timelapse at NumMax
 timelapseNumStart = 100000    # default= 1000 Start of timelapse number sequence
@@ -54,8 +52,8 @@ timelapseExitSec = 0          # default= 0 seconds Surpress Timelapse after spec
 timelapseMaxFiles = 0         # 0=off or specify MaxFiles to maintain then oldest are deleted  default=0 (off)
 timelapseSubDirMaxHours = 0   # 0=off or specify MaxHours - Creates New dated sub-folder if MaxHours exceeded
 timelapseSubDirMaxFiles = 0   # 0=off or specify MaxFiles - Creates New dated sub-folder if MaxFiles exceeded
-timelapseRecentMax = 10      # 0=off or specify number of most recent files to save in timelapseRecentDir
-timelapseRecentDir = "media/recent/timelapse"  # default= "media/recent/timelapse"  location of timelapseRecent files
+timelapseRecentMax = 0      # 0=off or specify number of most recent files to save in timelapseRecentDir
+timelapseRecentDir = "/home/pi/tmv/recent"  # default= "media/recent/timelapse"  location of timelapseRecent files
 
 # Manage Disk Space Settings
 #---------------------------

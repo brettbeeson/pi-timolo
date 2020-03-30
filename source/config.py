@@ -31,12 +31,12 @@ fileByDay = True	   # default= False File images under daily-photos/YYYY-MM-DD
 # Image Settings
 # --------------
 awbMode = 'auto'
-imageNamePrefix = 'pi-'  # default= 'cam1-' for all image file names. Eg garage-
+imageNamePrefix = ''  # default= 'cam1-' for all image file names. Eg garage-
 imageWidth = 1280          # default= 1024 Full Size Image Width in px
 imageHeight = 720          # default= 768  Full Size Image Height in px
 imageFormat = ".jpg"       # default= ".jpg"  image Formats .jpeg .png .gif .bmp
 imageJpegQuality = 75      # default= 95 jpg Encoder Quality Values 1(low)-100(high min compression) 0=85
-imageRotation = 0         # Default= 0  Rotate image. Valid values: 0, 90, 180, 270
+imageRotation = 180         # Default= 0  Rotate image. Valid values: 0, 90, 180, 270
 imageVFlip = False  # default= False True Flips image Vertically
 imageHFlip = False  # default= False True Flips image Horizontally
 imageGrayscale = False     # default= False True=Save image as grayscale False=Color
@@ -110,7 +110,7 @@ createLockFile = False      # default= False True= Create pi-timolo.sync file wh
 # Time Lapse Settings
 # -------------------
 timelapseOn = True          # default= False True=Turn timelapse On, False=Off
-timelapseDir = "/media/usb" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
+timelapseDir = "/home/pi/tmv/" # default= "media/timelapse"  Storage Folder Path for Time Lapse Image Storage
 timelapsePrefix = ""     # default= "tl-" Prefix for All timelapse images with this prefix
 timelapseStartAt = ""       # default= "" Off or Specify date/time to Start Sequence Eg "01-dec-2019 08:00:00" or "20:00:00"
 timelapseEndAt = ""       # default= "" Off or Specify time to stop eg "08:00:00" or "20:00:00"
@@ -126,8 +126,8 @@ timelapseExitSec = 0        # default= 0 seconds Surpress Timelapse after specif
 timelapseMaxFiles = 0       # default= 0 off or specify MaxFiles to maintain then oldest are deleted  default=0 (off)
 timelapseSubDirMaxFiles = 0 # default= 0 off or specify MaxFiles - Creates New dated sub-folder if MaxFiles exceeded
 timelapseSubDirMaxHours = 0 # default= 0 off or specify MaxHours - Creates New dated sub-folder if MaxHours exceeded
-timelapseRecentMax = 40     # default= 0 off or specify number of most recent files to save in timelapseRecentDir
-timelapseRecentDir = "media/recent/timelapse"  # default= "media/recent/timelapse"  location of timelapseRecent files
+timelapseRecentMax = 0     # default= 0 off or specify number of most recent files to save in timelapseRecentDir
+timelapseRecentDir = "/home/pi/tmv/"  # default= "media/recent/timelapse"  location of timelapseRecent files
 
 # Video Repeat Mode (suppresses Timelapse and Motion Settings)
 # -----------------
@@ -147,7 +147,7 @@ videoNumMax  = 20           # default= 20 Max number of videos desired. 0=Contin
 #---------------------------
 spaceTimerHrs = 0           # default= 0  0=off or specify hours frequency to perform free disk space check
 spaceFreeMB = 500           # default= 500  Target Free space in MB Required.
-spaceMediaDir = '/home/pi/pi-timolo/media'  # default= '/home/pi/pi-timolo/media'  Starting point for directory walk
+spaceMediaDir = '/home/pi/tmv/'  # default= '/home/pi/pi-timolo/media'  Starting point for directory walk
 spaceFileExt  = 'jpg'       # default= 'jpg' File extension to Delete Oldest Files
 
 #======================================

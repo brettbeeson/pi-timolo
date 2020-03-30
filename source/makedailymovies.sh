@@ -15,7 +15,8 @@
 # |------- 2019-01-01T10-10-10.jpg	<--- search for jpg to make videos
 # |------- 2019-01-01T10-10-20.jpg
 
-run_dashify=true
+#run_dashify=true
+run_dashify=false
 
 TLMM=/usr/local/bin/tlmm.py
 DASHIFY=/usr/local/bin/dashify.sh
@@ -54,10 +55,10 @@ echo Photos: $dailyphotos
 echo Videos: $dailyvideos
 echo Cam: $cam
 
-echo Pulling latest photos
+echo Pulling latest photos. Using --delete to remove stale local photos
 # --show-only-errors
-aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-photos daily-photos
-echo Pulling latest daily-videos. This is so when we upload with --delete, we can remove the right ones
+aws s3 sync --delete s3://tmv.brettbeeson.com.au/"$cam"/daily-photos daily-photos
+echo Pulling latest daily-videos. This is so when we upload with --delete, we can remove the right ones.
 aws s3 sync s3://tmv.brettbeeson.com.au/"$cam"/daily-videos daily-videos
 
 # For each folder of a day's photos...
@@ -85,11 +86,14 @@ for d in "$dailyphotos"/*/; do
 		video_made=$($TLMM video --log-level DEBUG --force --dest $ROOTDIR/$dailyvideos *.jpg 2>tlmm.log)
 		madevideo=$?
 		if [ $madevideo -eq 0 ]; then
-			echo $nfiles >nfiles
+			echo $nfiles > nfiles
+			# Upload nfiles otherwise it will be deleted on the next pull-sync
+			aws s3 sync . s3://tmv.brettbeeson.com.au/"$cam"/daily-photos/"$day"/ --exclude="*" --include="nfiles"
 			rm $tmpdir/$day*.mp4 2>/dev/null || true
 			rm $tmpdir/$day* 2>/dev/null || true
 			# Rename from 2019-01-01T15_to_2019-01-01T19.mp4 to 2019-01-01.mp4
 			mv "$video_made" "$ROOTDIR"/$dailyvideos/"$day".mp4
+			rm "$ROOTDIR"/$dailyvideos/"$day"T??_to_"$day"T??.mp4
 			video_made="$ROOTDIR"/$dailyvideos/"$day".mp4
 			if $run_dashify; then
 				echo Dashify video: $video_made
